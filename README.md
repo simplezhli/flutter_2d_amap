@@ -1,13 +1,18 @@
 # flutter_2d_amap
 
+本插件主要服务于 [flutter_deer](https://github.com/simplezhli/flutter_deer)
+
 高德2D地图插件 （暂时只实现了Android部分，未处理权限申请，逐步完善中）
 
+## 效果展示
+
+[](./preview/Screenshot_1.jpg)
 
 ## 实现功能包括
 
-* 定位并自动地图至当前位置
+* 定位并自动移动地图至当前位置
 * 默认获取POI数据并返回
-* 支持传入经纬度移动地图
+* 支持传入经纬度来移动地图
 * 支持搜索POI
 
 ## License
