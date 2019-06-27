@@ -10,11 +10,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  @override
-  void initState() {
-    super.initState();
-  }
-  
   List<PoiSearch> _list = [];
   int _index = 0;
   ScrollController _controller = new ScrollController();

@@ -6,7 +6,7 @@
 
 ## 效果展示
 
-[](./preview/Screenshot_1.jpg)
+<img src="preview/Screenshot_1.jpg" width="450px"/>
 
 ## 实现功能包括
 
@@ -14,6 +14,23 @@
 * 默认获取POI数据并返回
 * 支持传入经纬度来移动地图
 * 支持搜索POI
+
+## 使用方式
+
+```dart
+
+flutter_2d_amap:
+    git:
+      url: git://github.com/simplezhli/flutter_2d_amap.git
+
+import 'package:flutter_2d_amap/flutter_2d_amap.dart';
+
+Android AndroidManifest.xml 中添加：
+
+<meta-data
+     android:name="com.amap.api.v2.apikey"
+     android:value="配置你的key"/>
+```
 
 ## License
 

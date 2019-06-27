@@ -265,7 +265,9 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
                     } else {
                         platformThreadHandler.post(postMessageRunnable);
                     }
-                  
+                    if (list.size() > 0){
+                        move(list.get(0).getLatLonPoint().getLatitude(), list.get(0).getLatLonPoint().getLongitude());
+                    }
                 }
             }
         }
