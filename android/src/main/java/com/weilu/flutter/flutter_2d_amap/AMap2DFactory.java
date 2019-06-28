@@ -17,15 +17,17 @@ import io.flutter.plugin.platform.PlatformViewFactory;
 public class AMap2DFactory extends PlatformViewFactory {
 
     private final PluginRegistry.Registrar registrar;
+    private final AMap2DDelegate delegate;
     
-    public AMap2DFactory(PluginRegistry.Registrar registrar) {
+    public AMap2DFactory(PluginRegistry.Registrar registrar, AMap2DDelegate delegate) {
         super(StandardMessageCodec.INSTANCE);
         this.registrar = registrar;
+        this.delegate = delegate;
     }
 
     @Override
     public PlatformView create(Context context, int id, Object o) {
         Map<String, Object> params = (Map<String, Object>) o;
-        return new AMap2DView(context, registrar, id, params);
+        return new AMap2DView(context, registrar, id, params, delegate);
     }
 }

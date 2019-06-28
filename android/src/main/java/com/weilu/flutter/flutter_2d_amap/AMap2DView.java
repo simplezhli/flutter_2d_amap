@@ -62,12 +62,23 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
     private String keyWord = "";
     private boolean isPoiSearch;
     
-    AMap2DView(final Context context, PluginRegistry.Registrar registrar, int id, Map<String, Object> params) {
+    AMap2DView(final Context context, PluginRegistry.Registrar registrar, int id, Map<String, Object> params, AMap2DDelegate delegate) {
         this.context = context;
         platformThreadHandler = new Handler(context.getMainLooper());
         createMap(context);
+        delegate.requestPermissions(new AMap2DDelegate.RequestPermission() {
+            @Override
+            public void onRequestPermissionSuccess() {
+                setUpMap();
+            }
+
+            @Override
+            public void onRequestPermissionFailure() {
+                Toast.makeText(context,"定位失败，请检查定位权限是否开启！", Toast.LENGTH_SHORT).show();
+            }
+        });
         mAMap2DView.onResume();
-        methodChannel = new MethodChannel(registrar.messenger(), "flutter_2d_amap_" + id);
+        methodChannel = new MethodChannel(registrar.messenger(), "plugins.weilu/flutter_2d_amap_" + id);
         methodChannel.setMethodCallHandler(this);
 
         if (params.containsKey("isPoiSearch")) {
@@ -79,6 +90,9 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
         mAMap2DView = new MapView(context);
         mAMap2DView.onCreate(new Bundle());
         aMap = mAMap2DView.getMap();
+    }
+    
+    private void setUpMap(){
         CameraUpdateFactory.zoomTo(32);
         aMap.setOnMapClickListener(this);
         // 设置定位监听

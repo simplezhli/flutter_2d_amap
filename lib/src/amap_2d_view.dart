@@ -43,14 +43,14 @@ class _AMap2DViewState extends State<AMap2DView> {
   Widget build(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidView(
-        viewType: "flutter_2d_amap",
+        viewType: "plugins.weilu/flutter_2d_amap",
         onPlatformViewCreated: _onPlatformViewCreated,
         creationParams: _CreationParams.fromWidget(widget).toMap(),
         creationParamsCodec: const StandardMessageCodec(),
       );
     }else if (defaultTargetPlatform == TargetPlatform.iOS) {
       return UiKitView(
-        viewType: "flutter_2d_amap",
+        viewType: "plugins.weilu/flutter_2d_amap",
         onPlatformViewCreated: _onPlatformViewCreated,
         creationParams: _CreationParams.fromWidget(widget).toMap(),
         creationParamsCodec: const StandardMessageCodec(),
@@ -64,7 +64,7 @@ class AMap2DController{
   AMap2DController._(
       int id,
       this._widget,
-      ) : _channel = MethodChannel('flutter_2d_amap_$id') {
+      ) : _channel = MethodChannel('plugins.weilu/flutter_2d_amap_$id') {
     _channel.setMethodCallHandler(_handleMethod);
   }
   final MethodChannel _channel;

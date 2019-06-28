@@ -6,6 +6,9 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 public class Flutter2dAmapPlugin{
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
-    registrar.platformViewRegistry().registerViewFactory("flutter_2d_amap", new AMap2DFactory(registrar));
+    // 添加权限回调监听
+    final AMap2DDelegate delegate = new AMap2DDelegate(registrar.activity());
+    registrar.addRequestPermissionsResultListener(delegate);
+    registrar.platformViewRegistry().registerViewFactory("plugins.weilu/flutter_2d_amap", new AMap2DFactory(registrar, delegate));
   }
 }

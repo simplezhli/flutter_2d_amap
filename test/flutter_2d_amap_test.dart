@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('flutter_2d_amap');
+  const MethodChannel channel = MethodChannel('plugins.weilu/flutter_2d_amap');
 
   setUp(() {
     channel.setMockMethodCallHandler((MethodCall methodCall) async {
