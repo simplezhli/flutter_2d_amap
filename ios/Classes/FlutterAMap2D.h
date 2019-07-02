@@ -6,10 +6,11 @@
 //
 
 #import <Flutter/Flutter.h>
+#import <AMapLocationKit/AMapLocationKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FlutterAMap2DController : NSObject <FlutterPlatformView>
+@interface FlutterAMap2DController : NSObject<FlutterPlatformView>
     
 - (instancetype)initWithFrame:(CGRect)frame
                viewIdentifier:(int64_t)viewId
@@ -17,10 +18,13 @@ NS_ASSUME_NONNULL_BEGIN
               binaryMessenger:(NSObject<FlutterBinaryMessenger>*)messenger;
     
 - (UIView*)view;
-    @end
+
+- (void)amapLocationManager:(AMapLocationManager *)manager didUpdateLocation:(CLLocation *)location reGeocode:(AMapLocationReGeocode *)reGeocode;
+
+@end
 
 @interface FlutterAMap2DFactory : NSObject<FlutterPlatformViewFactory>
 - (instancetype)initWithMessenger:(NSObject<FlutterBinaryMessenger>*)messenger;
-    @end
+@end
 
 NS_ASSUME_NONNULL_END
