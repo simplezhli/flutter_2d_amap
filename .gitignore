@@ -6,3 +6,4 @@
 
 build/
 example/ios/.symlinks
+.idea/
