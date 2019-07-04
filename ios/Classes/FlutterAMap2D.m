@@ -64,8 +64,12 @@
         _viewId = viewId;
         [AMapServices sharedServices].enableHTTPS = YES;
         [AMapServices sharedServices].apiKey = @"1a8f6a489483534a9f2ca96e4eeeb9b3";
-        NSString* channelName = [NSString stringWithFormat:@"plugins.weilu/flutter_2d_amap_%lld",viewId];
+        NSString* channelName = [NSString stringWithFormat:@"plugins.weilu/flutter_2d_amap_%lld", viewId];
         _channel = [FlutterMethodChannel methodChannelWithName:channelName binaryMessenger:messenger];
+        __weak __typeof__(self) weakSelf = self;
+        [_channel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) {
+            [weakSelf onMethodCall:call result:result];
+        }];
         /// 初始化地图
         _mapView = [[MAMapView alloc] initWithFrame:frame];
         if ([self hasPermission]){
@@ -95,14 +99,12 @@
     CLLocationCoordinate2D center;
     center.latitude = location.coordinate.latitude;
     center.longitude = location.coordinate.longitude;
-    [_mapView setZoomLevel:7.5 animated: YES];
     [_mapView setCenterCoordinate:center animated:YES];
     [self.locationManager stopUpdatingLocation];
     
     AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
     
     request.types               = _types;
-    request.sortrule            = 0;
     request.requireExtension    = YES;
     request.offset              = 50;
     request.location            = [AMapGeoPoint locationWithLatitude:location.coordinate.latitude               longitude:location.coordinate.longitude];
@@ -115,18 +117,44 @@
         return;
     }
     
-    NSMutableArray *poiAnnotations = [NSMutableArray arrayWithCapacity:response.pois.count];
+    //1. 初始化可变字符串，存放最终生成json字串
+    NSMutableString *jsonString = [[NSMutableString alloc] initWithString:@"["];
     
     [response.pois enumerateObjectsUsingBlock:^(AMapPOI *obj, NSUInteger idx, BOOL *stop) {
-        [poiAnnotations addObject:obj];
+        
         if (idx == 0){
             CLLocationCoordinate2D center;
             center.latitude = obj.location.latitude;
             center.longitude = obj.location.longitude;
+            [_mapView setZoomLevel:18 animated: YES];
             [_mapView setCenterCoordinate:center animated:YES];
         }
+        //2. 遍历数组，取出键值对并按json格式存放
+        NSString *string  = [NSString stringWithFormat:@"{\"cityCode\":\"%@\",\"cityName\":\"%@\",\"provinceName\":\"%@\",\"title\":\"%@\",\"adName\":\"%@\",\"provinceCode\":\"%@\",\"latitude\":\"%f\",\"longitude\":\"%f\"},", obj.citycode, obj.city, obj.province, obj.name, obj.district, obj.pcode, obj.location.latitude, obj.location.longitude];
+        [jsonString appendString:string];
+        
     }];
     
+    // 3. 获取末尾逗号所在位置
+    NSUInteger location = [jsonString length] - 1;
+    
+    NSRange range = NSMakeRange(location, 1);
+    
+    // 4. 将末尾逗号换成结束的]
+    [jsonString replaceCharactersInRange:range withString:@"]"];
+    
+    NSDictionary* arguments = @{
+                                @"poiSearchResult" : jsonString
+                                };
+    [_channel invokeMethod:@"poiSearchResult" arguments:arguments];
+    
+}
+
+//字典转Json
+- (NSString*)dictionaryToJson:(NSDictionary *)dic {
+    NSError *parseError = nil;
+    NSData  *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
 - (UIView*)view {
@@ -140,6 +168,22 @@
 }
     
 - (void)onMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-    
+    if ([[call method] isEqualToString:@"search"]) {
+        AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
+        request.types               = _types;
+        request.requireExtension    = YES;
+        request.offset              = 50;
+        request.keywords            = [call arguments][@"keyWord"];
+        [self.search AMapPOIKeywordsSearch:request];
+        
+    } else if ([[call method] isEqualToString:@"move"]) {
+        NSString* lat = [call arguments][@"lat"];
+        NSString* lon = [call arguments][@"lon"];
+        CLLocationCoordinate2D center;
+        center.latitude = [lat doubleValue];
+        center.longitude = [lon doubleValue];
+        [_mapView setZoomLevel:18 animated: YES];
+        [_mapView setCenterCoordinate:center animated:YES];
+    }
 }
 @end
