@@ -26,11 +26,55 @@ flutter_2d_amap:
 
 import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 
-Android AndroidManifest.xml 中添加：
+
+AMap2DView(
+  onPoiSearched: (result){
+
+  },
+  onAMap2DViewCreated: (controller){
+
+  },
+)
+
+```
+
+### Android
+
+AndroidManifest.xml 中添加：
+
+```java
 
 <meta-data
      android:name="com.amap.api.v2.apikey"
      android:value="配置你的key"/>
+
+```
+
+### iOS
+
+使用前设置key：
+
+```dart
+
+Flutter2dAMap.setApiKey("配置你的key");
+
+```
+
+在info.plist中增加:
+
+```xml
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>地图功能需要您的定位服务，否则无法使用，如果您需要使用后台定位功能请选择“始终允许”。</string>
+
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>地图功能需要您的定位服务，否则无法使用。</string>
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>地图功能需要您的定位服务，否则无法使用。</string>
+
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
+
 ```
 
 ## License

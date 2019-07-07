@@ -5,7 +5,7 @@
 @implementation Flutter2dAmapPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
-      methodChannelWithName:@"plugins.weilu/flutter_2d_amap"
+      methodChannelWithName:@"plugins.weilu/flutter_2d_amap_"
             binaryMessenger:[registrar messenger]];
   Flutter2dAmapPlugin* instance = [[Flutter2dAmapPlugin alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
@@ -17,10 +17,11 @@
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
   if ([@"setKey" isEqualToString:call.method]) {
-    // NSString *key = call.arguments[@"key"];
+    NSString *key = call.arguments;
+    [AMapServices sharedServices].enableHTTPS = YES;
     // 配置高德地图的key
-    [AMapServices sharedServices].apiKey = @"1a8f6a489483534a9f2ca96e4eeeb9b3";
-    result(@"key设置成功");
+    [AMapServices sharedServices].apiKey = key;
+    result(@YES);
   } else {
     result(FlutterMethodNotImplemented);
   }

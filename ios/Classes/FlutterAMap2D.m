@@ -53,6 +53,7 @@
     int64_t _viewId;
     FlutterMethodChannel* _channel;
     NSString* _types;
+    bool _isPoiSearch;
 }
     
 - (instancetype)initWithFrame:(CGRect)frame
@@ -62,20 +63,18 @@
     if ([super init]) {
         _types = @"汽车服务|汽车销售|汽车维修|摩托车服务|餐饮服务|购物服务|生活服务|体育休闲服务|医疗保健服务|住宿服务|风景名胜|商务住宅|政府机构及社会团体|科教文化服务|交通设施服务|金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施";
         _viewId = viewId;
-        [AMapServices sharedServices].enableHTTPS = YES;
-        [AMapServices sharedServices].apiKey = @"1a8f6a489483534a9f2ca96e4eeeb9b3";
         NSString* channelName = [NSString stringWithFormat:@"plugins.weilu/flutter_2d_amap_%lld", viewId];
         _channel = [FlutterMethodChannel methodChannelWithName:channelName binaryMessenger:messenger];
         __weak __typeof__(self) weakSelf = self;
         [_channel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) {
             [weakSelf onMethodCall:call result:result];
         }];
+        _isPoiSearch = [args[@"isPoiSearch"] boolValue] == YES;
         /// 初始化地图
         _mapView = [[MAMapView alloc] initWithFrame:frame];
         if ([self hasPermission]){
             _mapView.showsUserLocation = YES;
             _mapView.userTrackingMode = MAUserTrackingModeFollow;
-            [_mapView setZoomLevel:17.5 animated: YES];
             /// 初始化定位
             self.locationManager = [[AMapLocationManager alloc] init];
             self.locationManager.delegate = self;
@@ -99,16 +98,21 @@
     CLLocationCoordinate2D center;
     center.latitude = location.coordinate.latitude;
     center.longitude = location.coordinate.longitude;
+    [_mapView setZoomLevel:18 animated: YES];
     [_mapView setCenterCoordinate:center animated:YES];
     [self.locationManager stopUpdatingLocation];
     
-    AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
-    
-    request.types               = _types;
-    request.requireExtension    = YES;
-    request.offset              = 50;
-    request.location            = [AMapGeoPoint locationWithLatitude:location.coordinate.latitude               longitude:location.coordinate.longitude];
-    [self.search AMapPOIKeywordsSearch:request];
+    if (_isPoiSearch){
+        
+        AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
+        
+        request.types               = _types;
+        request.requireExtension    = YES;
+        request.offset              = 50;
+        request.location            = [AMapGeoPoint locationWithLatitude:location.coordinate.latitude               longitude:location.coordinate.longitude];
+        [self.search AMapPOIKeywordsSearch:request];
+    }
+  
 }
 
 /* POI 搜索回调. */
@@ -126,8 +130,8 @@
             CLLocationCoordinate2D center;
             center.latitude = obj.location.latitude;
             center.longitude = obj.location.longitude;
-            [_mapView setZoomLevel:18 animated: YES];
-            [_mapView setCenterCoordinate:center animated:YES];
+            [self->_mapView setZoomLevel:18 animated: YES];
+            [self->_mapView setCenterCoordinate:center animated:YES];
         }
         //2. 遍历数组，取出键值对并按json格式存放
         NSString *string  = [NSString stringWithFormat:@"{\"cityCode\":\"%@\",\"cityName\":\"%@\",\"provinceName\":\"%@\",\"title\":\"%@\",\"adName\":\"%@\",\"provinceCode\":\"%@\",\"latitude\":\"%f\",\"longitude\":\"%f\"},", obj.citycode, obj.city, obj.province, obj.name, obj.district, obj.pcode, obj.location.latitude, obj.location.longitude];
@@ -169,21 +173,22 @@
     
 - (void)onMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     if ([[call method] isEqualToString:@"search"]) {
-        AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
-        request.types               = _types;
-        request.requireExtension    = YES;
-        request.offset              = 50;
-        request.keywords            = [call arguments][@"keyWord"];
-        [self.search AMapPOIKeywordsSearch:request];
-        
+        if (_isPoiSearch){
+            AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
+            request.types               = _types;
+            request.requireExtension    = YES;
+            request.offset              = 50;
+            request.keywords            = [call arguments][@"keyWord"];
+            [self.search AMapPOIKeywordsSearch:request];
+        }
     } else if ([[call method] isEqualToString:@"move"]) {
         NSString* lat = [call arguments][@"lat"];
         NSString* lon = [call arguments][@"lon"];
         CLLocationCoordinate2D center;
         center.latitude = [lat doubleValue];
         center.longitude = [lon doubleValue];
-        [_mapView setZoomLevel:18 animated: YES];
-        [_mapView setCenterCoordinate:center animated:YES];
+        [self->_mapView setZoomLevel:18 animated: YES];
+        [self->_mapView setCenterCoordinate:center animated:YES];
     }
 }
 @end
