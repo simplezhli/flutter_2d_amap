@@ -11,6 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <AMapLocationKit/AMapLocationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 @implementation FlutterAMap2DFactory {
     NSObject<FlutterBinaryMessenger>* _messenger;
@@ -41,7 +42,7 @@
 @end
 
 
-@interface FlutterAMap2DController()<AMapLocationManagerDelegate, AMapSearchDelegate>
+@interface FlutterAMap2DController()<AMapLocationManagerDelegate, AMapSearchDelegate, MAMapViewDelegate>
 
     @property (strong, nonatomic) CLLocationManager *mannger;
     @property (strong, nonatomic) AMapLocationManager *locationManager;
@@ -53,6 +54,7 @@
     int64_t _viewId;
     FlutterMethodChannel* _channel;
     NSString* _types;
+    MAPointAnnotation* _pointAnnotation;
     bool _isPoiSearch;
 }
     
@@ -61,7 +63,7 @@
                     arguments:(id _Nullable)args
               binaryMessenger:(NSObject<FlutterBinaryMessenger>*)messenger {
     if ([super init]) {
-        _types = @"汽车服务|汽车销售|汽车维修|摩托车服务|餐饮服务|购物服务|生活服务|体育休闲服务|医疗保健服务|住宿服务|风景名胜|商务住宅|政府机构及社会团体|科教文化服务|交通设施服务|金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施";
+        _types = @"010000|010100|020000|030000|040000|050000|050100|060000|060100|060200|060300|060400|070000|080000|080100|080300|080500|080600|090000|090100|090200|090300|100000|100100|110000|110100|120000|120200|120300|130000|140000|141200|150000|150100|150200|160000|160100|170000|170100|170200|180000|190000|200000";
         _viewId = viewId;
         NSString* channelName = [NSString stringWithFormat:@"plugins.weilu/flutter_2d_amap_%lld", viewId];
         _channel = [FlutterMethodChannel methodChannelWithName:channelName binaryMessenger:messenger];
@@ -72,9 +74,11 @@
         _isPoiSearch = [args[@"isPoiSearch"] boolValue] == YES;
         /// 初始化地图
         _mapView = [[MAMapView alloc] initWithFrame:frame];
+        _mapView.delegate = self;
         if ([self hasPermission]){
             _mapView.showsUserLocation = YES;
             _mapView.userTrackingMode = MAUserTrackingModeFollow;
+            
             /// 初始化定位
             self.locationManager = [[AMapLocationManager alloc] init];
             self.locationManager.delegate = self;
@@ -92,27 +96,23 @@
     return self;
 }
 
-//接收位置更新,实现AMapLocationManagerDelegate代理的amapLocationManager:didUpdateLocation方法，处理位置更新
+#pragma mark 点击地图方法
+- (void)mapView:(MAMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate {
+    [self->_mapView setZoomLevel:17 animated: YES];
+    [self->_mapView setCenterCoordinate:coordinate animated:YES];
+    [self drawMarkers:coordinate.latitude lon:coordinate.longitude];
+    [self searchPOI:coordinate.latitude lon:coordinate.longitude];
+}
 
+//接收位置更新,实现AMapLocationManagerDelegate代理的amapLocationManager:didUpdateLocation方法，处理位置更新
 - (void)amapLocationManager:(AMapLocationManager *)manager didUpdateLocation:(CLLocation *)location reGeocode:(AMapLocationReGeocode *)reGeocode{
     CLLocationCoordinate2D center;
     center.latitude = location.coordinate.latitude;
     center.longitude = location.coordinate.longitude;
-    [_mapView setZoomLevel:18 animated: YES];
+    [_mapView setZoomLevel:17 animated: YES];
     [_mapView setCenterCoordinate:center animated:YES];
     [self.locationManager stopUpdatingLocation];
-    
-    if (_isPoiSearch){
-        
-        AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
-        
-        request.types               = _types;
-        request.requireExtension    = YES;
-        request.offset              = 50;
-        request.location            = [AMapGeoPoint locationWithLatitude:location.coordinate.latitude               longitude:location.coordinate.longitude];
-        [self.search AMapPOIKeywordsSearch:request];
-    }
-  
+    [self searchPOI:location.coordinate.latitude lon:location.coordinate.longitude];
 }
 
 /* POI 搜索回调. */
@@ -130,8 +130,9 @@
             CLLocationCoordinate2D center;
             center.latitude = obj.location.latitude;
             center.longitude = obj.location.longitude;
-            [self->_mapView setZoomLevel:18 animated: YES];
+            [self->_mapView setZoomLevel:17 animated: YES];
             [self->_mapView setCenterCoordinate:center animated:YES];
+            [self drawMarkers:obj.location.latitude lon:obj.location.longitude];
         }
         //2. 遍历数组，取出键值对并按json格式存放
         NSString *string  = [NSString stringWithFormat:@"{\"cityCode\":\"%@\",\"cityName\":\"%@\",\"provinceName\":\"%@\",\"title\":\"%@\",\"adName\":\"%@\",\"provinceCode\":\"%@\",\"latitude\":\"%f\",\"longitude\":\"%f\"},", obj.citycode, obj.city, obj.province, obj.name, obj.district, obj.pcode, obj.location.latitude, obj.location.longitude];
@@ -170,7 +171,30 @@
     CLAuthorizationStatus locationStatus =  [CLLocationManager authorizationStatus];
     return (bool)(locationStatus == kCLAuthorizationStatusAuthorizedWhenInUse || locationStatus == kCLAuthorizationStatusAuthorizedAlways);
 }
+
+- (void)drawMarkers:(CGFloat)lat lon:(CGFloat)lon{
+    if (self->_pointAnnotation == NULL){
+        self->_pointAnnotation = [[MAPointAnnotation alloc] init];
+        self->_pointAnnotation.coordinate = CLLocationCoordinate2DMake(lat, lon);
+        [self->_mapView addAnnotation:self->_pointAnnotation];
+    }else{
+        self->_pointAnnotation.coordinate = CLLocationCoordinate2DMake(lat, lon);
+    }
+}
+
+- (void)searchPOI:(CGFloat)lat lon:(CGFloat)lon{
     
+    if (_isPoiSearch){
+        AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
+        
+        request.types               = _types;
+        request.requireExtension    = YES;
+        request.offset              = 50;
+        request.location            = [AMapGeoPoint locationWithLatitude:lat longitude:lon];
+        [self.search AMapPOIKeywordsSearch:request];
+    }
+}
+
 - (void)onMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     if ([[call method] isEqualToString:@"search"]) {
         if (_isPoiSearch){
@@ -187,8 +211,9 @@
         CLLocationCoordinate2D center;
         center.latitude = [lat doubleValue];
         center.longitude = [lon doubleValue];
-        [self->_mapView setZoomLevel:18 animated: YES];
+        [self->_mapView setZoomLevel:17 animated: YES];
         [self->_mapView setCenterCoordinate:center animated:YES];
+        [self drawMarkers:[lat doubleValue] lon:[lon doubleValue]];
     }
 }
 @end

@@ -45,9 +45,7 @@ import io.flutter.plugin.platform.PlatformView;
 public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler, LocationSource, AMapLocationListener,
         AMap.OnMapClickListener, PoiSearch.OnPoiSearchListener {
     
-    private static  final String SEARCH_CONTENT = "汽车服务|汽车销售|汽车维修|摩托车服务|餐饮服务|购物服务|生活服务|体育休闲服务|" +
-            "医疗保健服务|住宿服务|风景名胜|商务住宅|政府机构及社会团体|科" +
-            "教文化服务|交通设施服务|金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施";
+    private static  final String SEARCH_CONTENT = "010000|010100|020000|030000|040000|050000|050100|060000|060100|060200|060300|060400|070000|080000|080100|080300|080500|080600|090000|090100|090200|090300|100000|100100|110000|110100|120000|120200|120300|130000|140000|141200|150000|150100|150200|160000|160100|170000|170100|170200|180000|190000|200000";
   
     private MapView mAMap2DView;
     private AMap aMap;
