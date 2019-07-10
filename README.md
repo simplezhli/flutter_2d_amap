@@ -50,6 +50,26 @@ AndroidManifest.xml 中添加：
 
 ```
 
+如果你的`targetSdkVersion`为27以上，则需要做以下配置来支持http明文请求（具体可以看demo），否则会导致地图加载不出：
+
+AndroidManifest.xml 中添加：
+
+```java
+<application
+  android:networkSecurityConfig="@xml/network_security_config"
+/>
+
+```
+
+在 res 下新增一个 xml 目录，然后创建一个名为：`network_security_config.xml` 文件：
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
+```
+
 ### iOS
 
 使用前设置key：
