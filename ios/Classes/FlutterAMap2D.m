@@ -42,7 +42,7 @@
 @end
 
 
-@interface FlutterAMap2DController()<AMapLocationManagerDelegate, AMapSearchDelegate, MAMapViewDelegate>
+@interface FlutterAMap2DController()<AMapLocationManagerDelegate, AMapSearchDelegate, CLLocationManagerDelegate, MAMapViewDelegate>
 
     @property (strong, nonatomic) CLLocationManager *mannger;
     @property (strong, nonatomic) AMapLocationManager *locationManager;
@@ -75,7 +75,18 @@
         /// 初始化地图
         _mapView = [[MAMapView alloc] initWithFrame:frame];
         _mapView.delegate = self;
-        if ([self hasPermission]){
+        // 请求定位权限
+        self.mannger =  [[CLLocationManager alloc] init];
+        self.mannger.delegate = self;
+        [self.mannger requestWhenInUseAuthorization];
+    }
+    return self;
+}
+
+-(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    switch (status) {
+        case kCLAuthorizationStatusAuthorizedAlways:
+        case kCLAuthorizationStatusAuthorizedWhenInUse:{
             _mapView.showsUserLocation = YES;
             _mapView.userTrackingMode = MAUserTrackingModeFollow;
             
@@ -87,13 +98,12 @@
             /// 初始化搜索
             self.search = [[AMapSearchAPI alloc] init];
             self.search.delegate = self;
-            
-        }else{
-            self.mannger =  [[CLLocationManager alloc] init];
-            [self.mannger requestWhenInUseAuthorization];
+            break;
         }
+        default:
+            NSLog(@"授权失败");
+            break;
     }
-    return self;
 }
 
 #pragma mark 点击地图方法
