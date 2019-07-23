@@ -148,7 +148,7 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
                     mLocationClient.stopLocation();
                 }
             } else {
-                Toast.makeText(context,"定位失败，请检查定位权限是否开启！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"定位失败，请检查GPS是否开启！", Toast.LENGTH_SHORT).show();
                 if (mLocationClient != null) {
                     mLocationClient.stopLocation();
                 }
@@ -245,7 +245,7 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
                 if (result.getQuery().equals(query)) {
                     final List<PoiItem> list = result.getPois();
                     builder.delete(0, builder.length());
-                    // 拼接json
+                    // 拼接json（避免引用gson之类的库，小插件不必要。。。）
                     builder.append("[");
                     for (int i = 0; i < list.size(); i++) {
                         PoiItem item = list.get(i);

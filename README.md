@@ -22,7 +22,7 @@
 
 flutter_2d_amap:
     git:
-      url: git://github.com/simplezhli/flutter_2d_amap.git
+      url: https://github.com/simplezhli/flutter_2d_amap.git
 
 import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 
