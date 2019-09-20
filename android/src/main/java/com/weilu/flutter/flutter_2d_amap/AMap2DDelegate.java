@@ -71,7 +71,7 @@ public class AMap2DDelegate implements PluginRegistry.RequestPermissionsResultLi
         };
     }
 
-    void requestPermissions(@NonNull RequestPermission mRequestPermission){
+    public void requestPermissions(@NonNull RequestPermission mRequestPermission){
         this.mRequestPermission = mRequestPermission;
         if (!permissionManager.isPermissionGranted()) {
             permissionManager.askForPermission();
