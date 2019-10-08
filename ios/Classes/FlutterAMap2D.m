@@ -224,6 +224,8 @@
         [self->_mapView setZoomLevel:17 animated: YES];
         [self->_mapView setCenterCoordinate:center animated:YES];
         [self drawMarkers:[lat doubleValue] lon:[lon doubleValue]];
+    }else if ([[call method] isEqualToString:@"location"]) {
+        [self.locationManager startUpdatingLocation]; 
     }
 }
 @end

@@ -100,6 +100,10 @@ class AMap2DController{
       'lon': lon
     });
   }
+
+  Future<void> location() async {
+    return await _channel.invokeMethod("location");
+  }
 }
 
 /// 需要更多的初始化配置，可以在此处添加

@@ -59,6 +59,7 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
     private final Context context;
     private String keyWord = "";
     private boolean isPoiSearch;
+    private static final String IS_POI_SEARCH = "isPoiSearch";
     
     AMap2DView(final Context context, PluginRegistry.Registrar registrar, int id, Map<String, Object> params, AMap2DDelegate delegate) {
         this.context = context;
@@ -79,8 +80,8 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
         methodChannel = new MethodChannel(registrar.messenger(), "plugins.weilu/flutter_2d_amap_" + id);
         methodChannel.setMethodCallHandler(this);
 
-        if (params.containsKey("isPoiSearch")) {
-            isPoiSearch = (boolean) params.get("isPoiSearch");
+        if (params.containsKey(IS_POI_SEARCH)) {
+            isPoiSearch = (boolean) params.get(IS_POI_SEARCH);
         }
     }
     
@@ -121,8 +122,15 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
             case "move":
                 move(Double.parseDouble((String) request.get("lat")), Double.parseDouble((String) request.get("lon")));
                 break;
+            case "location":
+                if (mLocationClient != null) {
+                    mLocationClient.startLocation();
+                }
+                break;
+            default:
+                break;    
         }
-    };
+    }
     
     @Override
     public View getView() {
