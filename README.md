@@ -1,6 +1,6 @@
 # flutter_2d_amap
 
-本插件主要服务于 [flutter_deer](https://github.com/simplezhli/flutter_deer)
+本插件主要服务于 [flutter_deer](https://github.com/simplezhli/flutter_deer)。仅保持现有功能，需要的功能可自行拓展。
 
 高德2D地图插件
 
