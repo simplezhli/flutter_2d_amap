@@ -85,13 +85,13 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
         }
     }
     
-    private void createMap(Context context){
+    private void createMap(Context context) {
         mAMap2DView = new MapView(context);
         mAMap2DView.onCreate(new Bundle());
         aMap = mAMap2DView.getMap();
     }
     
-    private void setUpMap(){
+    private void setUpMap() {
         CameraUpdateFactory.zoomTo(32);
         aMap.setOnMapClickListener(this);
         // 设置定位监听
@@ -114,7 +114,7 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
     public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
         String method = methodCall.method;
         Map<String, Object> request = (Map<String, Object>) methodCall.arguments;
-        switch(method){
+        switch(method) {
             case "search":
                 keyWord = (String) request.get("keyWord");
                 search();
@@ -165,7 +165,7 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
     }
 
     private void search() {
-        if (!isPoiSearch){
+        if (!isPoiSearch) {
             return;
         }
         query = new PoiSearch.Query(keyWord, SEARCH_CONTENT, "");
@@ -177,14 +177,14 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
         poiSearch.searchPOIAsyn();
     }
 
-    private void move(double lat, double lon){
+    private void move(double lat, double lon) {
         aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
         LatLng latLng = new LatLng(lat, lon);
         drawMarkers(latLng, BitmapDescriptorFactory.defaultMarker());
     }
 
     private void search(double latitude, double longitude) {
-        if (!isPoiSearch){
+        if (!isPoiSearch) {
             return;
         }
         query = new PoiSearch.Query("", SEARCH_CONTENT, "");
@@ -209,9 +209,9 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
     
     private void drawMarkers(LatLng latLng, BitmapDescriptor bitmapDescriptor) {
         aMap.animateCamera(CameraUpdateFactory.changeLatLng(new LatLng(latLng.latitude, latLng.longitude)));
-        if (mMarker == null){
+        if (mMarker == null) {
             mMarker = aMap.addMarker(new MarkerOptions().position(latLng).icon(bitmapDescriptor).draggable(true));
-        }else {
+        } else {
             mMarker.setPosition(latLng);
         }
     }
@@ -267,7 +267,7 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
                         builder.append("\"latitude\": \"");builder.append(item.getLatLonPoint().getLatitude());builder.append("\",");
                         builder.append("\"longitude\": \"");builder.append(item.getLatLonPoint().getLongitude());builder.append("\"");
                         builder.append("},");
-                        if (i == list.size() - 1){
+                        if (i == list.size() - 1) {
                             builder.deleteCharAt(builder.length() - 1);
                         }
                     }
@@ -285,7 +285,7 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
                     } else {
                         platformThreadHandler.post(postMessageRunnable);
                     }
-                    if (list.size() > 0){
+                    if (list.size() > 0) {
                         move(list.get(0).getLatLonPoint().getLatitude(), list.get(0).getLatLonPoint().getLongitude());
                     }
                 }

@@ -53,7 +53,7 @@ public class AMap2DDelegate implements PluginRegistry.RequestPermissionsResultLi
     
     private final PermissionManager permissionManager;
     
-    AMap2DDelegate(final Activity activity){
+    AMap2DDelegate(final Activity activity) {
         
         permissionManager = new PermissionManager() {
             @Override
@@ -73,31 +73,31 @@ public class AMap2DDelegate implements PluginRegistry.RequestPermissionsResultLi
         };
     }
 
-    public void requestPermissions(@NonNull RequestPermission mRequestPermission){
+    public void requestPermissions(@NonNull RequestPermission mRequestPermission) {
         this.mRequestPermission = mRequestPermission;
         if (!permissionManager.isPermissionGranted()) {
             permissionManager.askForPermission();
-        }else {
+        } else {
             mRequestPermission.onRequestPermissionSuccess();
         }
     }
 
     @Override
     public boolean onRequestPermissionsResult(int requestCode, String[] strings, int[] ints) {
-        if (requestCode == REQUEST_PERMISSION){
+        if (requestCode == REQUEST_PERMISSION) {
             boolean permissionGranted = true;
             for (int i : ints) {
                 if (i != PackageManager.PERMISSION_GRANTED) {
                     permissionGranted = false;
                 }
             }
-            if (permissionGranted){
+            if (permissionGranted) {
                 mRequestPermission.onRequestPermissionSuccess();
-            }else {
+            } else {
                 mRequestPermission.onRequestPermissionFailure();
             }
             return true;
-        }else {
+        } else {
             return false;
         }
     }

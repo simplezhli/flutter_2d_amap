@@ -127,7 +127,7 @@
 
 /* POI 搜索回调. */
 - (void)onPOISearchDone:(AMapPOISearchBaseRequest *)request response:(AMapPOISearchResponse *)response{
-    if (response.pois.count == 0){
+    if (response.pois.count == 0) {
         return;
     }
     
@@ -136,7 +136,7 @@
     
     [response.pois enumerateObjectsUsingBlock:^(AMapPOI *obj, NSUInteger idx, BOOL *stop) {
         
-        if (idx == 0){
+        if (idx == 0) {
             CLLocationCoordinate2D center;
             center.latitude = obj.location.latitude;
             center.longitude = obj.location.longitude;
@@ -182,19 +182,19 @@
     return (bool)(locationStatus == kCLAuthorizationStatusAuthorizedWhenInUse || locationStatus == kCLAuthorizationStatusAuthorizedAlways);
 }
 
-- (void)drawMarkers:(CGFloat)lat lon:(CGFloat)lon{
-    if (self->_pointAnnotation == NULL){
+- (void)drawMarkers:(CGFloat)lat lon:(CGFloat)lon {
+    if (self->_pointAnnotation == NULL) {
         self->_pointAnnotation = [[MAPointAnnotation alloc] init];
         self->_pointAnnotation.coordinate = CLLocationCoordinate2DMake(lat, lon);
         [self->_mapView addAnnotation:self->_pointAnnotation];
-    }else{
+    } else {
         self->_pointAnnotation.coordinate = CLLocationCoordinate2DMake(lat, lon);
     }
 }
 
 - (void)searchPOI:(CGFloat)lat lon:(CGFloat)lon{
     
-    if (_isPoiSearch){
+    if (_isPoiSearch) {
         AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
         
         request.types               = _types;
@@ -207,7 +207,7 @@
 
 - (void)onMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     if ([[call method] isEqualToString:@"search"]) {
-        if (_isPoiSearch){
+        if (_isPoiSearch) {
             AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
             request.types               = _types;
             request.requireExtension    = YES;
@@ -224,7 +224,7 @@
         [self->_mapView setZoomLevel:17 animated: YES];
         [self->_mapView setCenterCoordinate:center animated:YES];
         [self drawMarkers:[lat doubleValue] lon:[lon doubleValue]];
-    }else if ([[call method] isEqualToString:@"location"]) {
+    } else if ([[call method] isEqualToString:@"location"]) {
         [self.locationManager startUpdatingLocation]; 
     }
 }

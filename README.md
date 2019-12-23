@@ -28,10 +28,10 @@ import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 
 
 AMap2DView(
-  onPoiSearched: (result){
+  onPoiSearched: (result) {
 
   },
-  onAMap2DViewCreated: (controller){
+  onAMap2DViewCreated: (controller) {
 
   },
 )

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 
-void main(){
+void main() {
   Flutter2dAMap.setApiKey("1a8f6a489483534a9f2ca96e4eeeb9b3");
   runApp(MyApp());
 }
@@ -31,14 +31,14 @@ class _MyAppState extends State<MyApp> {
               Expanded(
                 flex: 9,
                 child: AMap2DView(
-                  onPoiSearched: (result){
+                  onPoiSearched: (result) {
                     _controller.animateTo(0.0, duration: Duration(milliseconds: 10), curve: Curves.ease);
                     setState(() {
                       _index = 0;
                       _list = result;
                     });
                   },
-                  onAMap2DViewCreated: (controller){
+                  onAMap2DViewCreated: (controller) {
                     _aMap2DController = controller;
                   },
                 ),
@@ -52,12 +52,12 @@ class _MyAppState extends State<MyApp> {
                   separatorBuilder: (_, index) {
                     return Divider(height: 0.6);
                   },
-                  itemBuilder: (_, index){
+                  itemBuilder: (_, index) {
                     return InkWell(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
                           _index = index;
-                          if (_aMap2DController != null){
+                          if (_aMap2DController != null) {
                             _aMap2DController.move(_list[index].latitude, _list[index].longitude);
                           }
                         });

@@ -48,7 +48,7 @@ class _AMap2DViewState extends State<AMap2DView> {
         creationParams: _CreationParams.fromWidget(widget).toMap(),
         creationParamsCodec: const StandardMessageCodec(),
       );
-    }else if (defaultTargetPlatform == TargetPlatform.iOS) {
+    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
       return UiKitView(
         viewType: "plugins.weilu/flutter_2d_amap",
         onPlatformViewCreated: _onPlatformViewCreated,
@@ -73,12 +73,12 @@ class AMap2DController{
 
   Future<dynamic> _handleMethod(MethodCall call) async {
     String method = call.method;
-    switch(method){
+    switch(method) {
       case "poiSearchResult":
         {
           Map args = call.arguments;
           List<PoiSearch> list = [];
-          (json.decode(args['poiSearchResult']) as List).forEach((value){
+          (json.decode(args['poiSearchResult']) as List).forEach((value) {
             list.add(PoiSearch.fromJsonMap(value));
           });
           _widget.onPoiSearched(list);
