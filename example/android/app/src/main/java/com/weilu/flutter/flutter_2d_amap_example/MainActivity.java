@@ -1,13 +1,13 @@
 package com.weilu.flutter.flutter_2d_amap_example;
 
-import android.os.Bundle;
-import io.flutter.app.FlutterActivity;
-import io.flutter.plugins.GeneratedPluginRegistrant;
+import com.weilu.flutter.flutter_2d_amap.Flutter2dAmapPlugin;
+
+import io.flutter.embedding.android.FlutterActivity;
+import io.flutter.embedding.engine.FlutterEngine;
 
 public class MainActivity extends FlutterActivity {
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    GeneratedPluginRegistrant.registerWith(this);
+  public void configureFlutterEngine(FlutterEngine flutterEngine) {
+    flutterEngine.getPlugins().add(new Flutter2dAmapPlugin());
   }
 }

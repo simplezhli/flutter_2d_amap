@@ -38,7 +38,7 @@ public class AMap2DDelegate implements PluginRegistry.RequestPermissionsResultLi
         void askForPermission();
     }
 
-    interface RequestPermission {
+    public interface RequestPermission {
         /**
          * 权限请求成功
          */

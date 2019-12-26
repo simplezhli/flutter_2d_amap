@@ -32,9 +32,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.platform.PlatformView;
 
 /**
@@ -61,27 +61,33 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
     private boolean isPoiSearch;
     private static final String IS_POI_SEARCH = "isPoiSearch";
     
-    AMap2DView(final Context context, PluginRegistry.Registrar registrar, int id, Map<String, Object> params, AMap2DDelegate delegate) {
+    AMap2DView(final Context context, BinaryMessenger messenger, int id, Map<String, Object> params, AMap2DDelegate delegate) {
         this.context = context;
         platformThreadHandler = new Handler(context.getMainLooper());
         createMap(context);
-        delegate.requestPermissions(new AMap2DDelegate.RequestPermission() {
-            @Override
-            public void onRequestPermissionSuccess() {
-                setUpMap();
-            }
-
-            @Override
-            public void onRequestPermissionFailure() {
-                Toast.makeText(context,"定位失败，请检查定位权限是否开启！", Toast.LENGTH_SHORT).show();
-            }
-        });
+        setAMap2DDelegate(delegate);
         mAMap2DView.onResume();
-        methodChannel = new MethodChannel(registrar.messenger(), "plugins.weilu/flutter_2d_amap_" + id);
+        methodChannel = new MethodChannel(messenger, "plugins.weilu/flutter_2d_amap_" + id);
         methodChannel.setMethodCallHandler(this);
 
         if (params.containsKey(IS_POI_SEARCH)) {
             isPoiSearch = (boolean) params.get(IS_POI_SEARCH);
+        }
+    }
+    
+    void setAMap2DDelegate(AMap2DDelegate delegate) {
+        if (delegate != null){
+            delegate.requestPermissions(new AMap2DDelegate.RequestPermission() {
+                @Override
+                public void onRequestPermissionSuccess() {
+                    setUpMap();
+                }
+
+                @Override
+                public void onRequestPermissionFailure() {
+                    Toast.makeText(context,"定位失败，请检查定位权限是否开启！", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
     

@@ -2,7 +2,7 @@
 
 本插件主要服务于 [flutter_deer](https://github.com/simplezhli/flutter_deer)。仅保持现有功能，需要的功能可自行拓展。
 
-高德2D地图插件
+高德2D地图插件（已支持[1.12版本新的android插件api]("https://flutter.dev/docs/development/packages-and-plugins/plugin-api-migration")）
 
 ## 效果展示
 
