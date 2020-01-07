@@ -11,14 +11,14 @@ class PoiSearch {
   String longitude;
 
 	PoiSearch.fromJsonMap(Map<String, dynamic> map): 
-		cityCode = map["cityCode"],
-		cityName = map["cityName"],
-		provinceName = map["provinceName"],
-		title = map["title"],
-		adName = map["adName"],
-		provinceCode = map["provinceCode"],
-		latitude = map["latitude"],
-		longitude = map["longitude"];
+		cityCode = map['cityCode'],
+		cityName = map['cityName'],
+		provinceName = map['provinceName'],
+		title = map['title'],
+		adName = map['adName'],
+		provinceCode = map['provinceCode'],
+		latitude = map['latitude'],
+		longitude = map['longitude'];
 
 	Map<String, dynamic> toJson() {
 		final Map<String, dynamic> data = new Map<String, dynamic>();

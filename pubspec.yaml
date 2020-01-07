@@ -1,10 +1,10 @@
 name: flutter_2d_amap
-description: 高德2D地图插件
+description: A flutter plugin for 2D amap.
 version: 0.0.2
 homepage: 'https://github.com/simplezhli/flutter_2d_amap'
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
   flutter: ">=1.10.0 <2.0.0"
   
 dependencies:

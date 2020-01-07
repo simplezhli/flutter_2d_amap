@@ -11,7 +11,7 @@ class Flutter2dAMap {
 
   static Future<bool> setApiKey(String key) async {
     if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return await _channel.invokeMethod("setKey", key);
+      return await _channel.invokeMethod('setKey', key);
     } else {
       return Future.value(true);
     }

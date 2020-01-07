@@ -43,14 +43,14 @@ class _AMap2DViewState extends State<AMap2DView> {
   Widget build(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidView(
-        viewType: "plugins.weilu/flutter_2d_amap",
+        viewType: 'plugins.weilu/flutter_2d_amap',
         onPlatformViewCreated: _onPlatformViewCreated,
         creationParams: _CreationParams.fromWidget(widget).toMap(),
         creationParamsCodec: const StandardMessageCodec(),
       );
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
       return UiKitView(
-        viewType: "plugins.weilu/flutter_2d_amap",
+        viewType: 'plugins.weilu/flutter_2d_amap',
         onPlatformViewCreated: _onPlatformViewCreated,
         creationParams: _CreationParams.fromWidget(widget).toMap(),
         creationParamsCodec: const StandardMessageCodec(),
@@ -74,7 +74,7 @@ class AMap2DController{
   Future<dynamic> _handleMethod(MethodCall call) async {
     String method = call.method;
     switch(method) {
-      case "poiSearchResult":
+      case 'poiSearchResult':
         {
           Map args = call.arguments;
           List<PoiSearch> list = [];
@@ -89,27 +89,26 @@ class AMap2DController{
   }
 
   Future<void> search(String keyWord) async {
-    return await _channel.invokeMethod("search", <String, dynamic>{
+    return await _channel.invokeMethod('search', <String, dynamic>{
       'keyWord': keyWord,
     });
   }
 
   Future<void> move(String lat, String lon) async {
-    return await _channel.invokeMethod("move", <String, dynamic>{
+    return await _channel.invokeMethod('move', <String, dynamic>{
       'lat': lat,
       'lon': lon
     });
   }
 
   Future<void> location() async {
-    return await _channel.invokeMethod("location");
+    return await _channel.invokeMethod('location');
   }
 }
 
 /// 需要更多的初始化配置，可以在此处添加
 class _CreationParams {
-  _CreationParams(
-      {this.isPoiSearch});
+  _CreationParams({this.isPoiSearch});
 
   static _CreationParams fromWidget(AMap2DView widget) {
     return _CreationParams(
