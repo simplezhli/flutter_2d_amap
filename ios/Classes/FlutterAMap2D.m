@@ -108,7 +108,6 @@
 
 #pragma mark 点击地图方法
 - (void)mapView:(MAMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate {
-    [self->_mapView setZoomLevel:17 animated: YES];
     [self->_mapView setCenterCoordinate:coordinate animated:YES];
     [self drawMarkers:coordinate.latitude lon:coordinate.longitude];
     [self searchPOI:coordinate.latitude lon:coordinate.longitude];
@@ -140,7 +139,6 @@
             CLLocationCoordinate2D center;
             center.latitude = obj.location.latitude;
             center.longitude = obj.location.longitude;
-            [self->_mapView setZoomLevel:17 animated: YES];
             [self->_mapView setCenterCoordinate:center animated:YES];
             [self drawMarkers:obj.location.latitude lon:obj.location.longitude];
         }
@@ -221,7 +219,6 @@
         CLLocationCoordinate2D center;
         center.latitude = [lat doubleValue];
         center.longitude = [lon doubleValue];
-        [self->_mapView setZoomLevel:17 animated: YES];
         [self->_mapView setCenterCoordinate:center animated:YES];
         [self drawMarkers:[lat doubleValue] lon:[lon doubleValue]];
     } else if ([[call method] isEqualToString:@"location"]) {

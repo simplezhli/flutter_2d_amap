@@ -10,7 +10,9 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 /** Flutter2dAmapPlugin */
 public class Flutter2dAmapPlugin implements FlutterPlugin, ActivityAware{
 
-  private AMap2DFactory mFactory;
+  private AMap2DDelegate delegate;
+  private FlutterPluginBinding pluginBinding;
+  private ActivityPluginBinding activityBinding;
   
   public Flutter2dAmapPlugin() {}
   
@@ -27,26 +29,30 @@ public class Flutter2dAmapPlugin implements FlutterPlugin, ActivityAware{
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-    BinaryMessenger messenger = binding.getBinaryMessenger();
-    mFactory = new AMap2DFactory(messenger, null);
-    binding.getPlatformViewRegistry().registerViewFactory("plugins.weilu/flutter_2d_amap", mFactory);
+    pluginBinding = binding;
   }
 
   @Override
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-
+    pluginBinding = null;
   }
 
   @Override
   public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-    final AMap2DDelegate delegate = new AMap2DDelegate(binding.getActivity());
+    activityBinding = binding;
+    
+    BinaryMessenger messenger = pluginBinding.getBinaryMessenger();
+    AMap2DFactory mFactory = new AMap2DFactory(messenger, null);
+    pluginBinding.getPlatformViewRegistry().registerViewFactory("plugins.weilu/flutter_2d_amap", mFactory);
+    
+    delegate = new AMap2DDelegate(binding.getActivity());
     binding.addRequestPermissionsResultListener(delegate);
     mFactory.setDelegate(delegate);
   }
 
   @Override
   public void onDetachedFromActivity() {
-
+    tearDown();
   }
 
   @Override
@@ -59,4 +65,9 @@ public class Flutter2dAmapPlugin implements FlutterPlugin, ActivityAware{
     onAttachedToActivity(binding);
   }
 
+  private void tearDown() {
+    activityBinding.removeRequestPermissionsResultListener(delegate);
+    activityBinding = null;
+    delegate = null;
+  }
 }

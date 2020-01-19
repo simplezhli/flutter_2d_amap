@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -117,7 +118,7 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
     }
     
     @Override
-    public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
+    public void onMethodCall(MethodCall methodCall, @NonNull MethodChannel.Result result) {
         String method = methodCall.method;
         Map<String, Object> request = (Map<String, Object>) methodCall.arguments;
         switch(method) {
@@ -126,7 +127,7 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
                 search();
                 break;
             case "move":
-                move(Double.parseDouble((String) request.get("lat")), Double.parseDouble((String) request.get("lon")));
+                move(toDouble((String) request.get("lat")), toDouble((String) request.get("lon")));
                 break;
             case "location":
                 if (mLocationClient != null) {
@@ -136,6 +137,15 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
             default:
                 break;    
         }
+    }
+
+    private double toDouble(String obj) {
+        try {
+            return Double.parseDouble(obj);
+        } catch (Exception e) {
+            e.fillInStackTrace();
+        }
+        return 0D;
     }
     
     @Override
@@ -184,7 +194,6 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
     }
 
     private void move(double lat, double lon) {
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
         LatLng latLng = new LatLng(lat, lon);
         drawMarkers(latLng, BitmapDescriptorFactory.defaultMarker());
     }
