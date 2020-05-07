@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 
 void main() {
-  Flutter2dAMap.setApiKey("1a8f6a489483534a9f2ca96e4eeeb9b3");
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  Flutter2dAMap.setApiKey("1a8f6a489483534a9f2ca96e4eeeb9b3").then((value) => runApp(MyApp()));
 }
 
 class MyApp extends StatefulWidget {

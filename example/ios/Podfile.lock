@@ -14,11 +14,11 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `Flutter`)
   - flutter_2d_amap (from `.symlinks/plugins/flutter_2d_amap/ios`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - AMap2DMap
     - AMapFoundation
     - AMapLocation
@@ -26,7 +26,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: Flutter
   flutter_2d_amap:
     :path: ".symlinks/plugins/flutter_2d_amap/ios"
 
@@ -35,9 +35,9 @@ SPEC CHECKSUMS:
   AMapFoundation: 216d58448c80356434ac4332250a8fdb2f5c4d1e
   AMapLocation: 89a7e4eb6040d32ba73c77a4966ecc66e46aa7c3
   AMapSearch: af02822537e55b85a4752e9df5c19e4b9da82031
-  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
-  flutter_2d_amap: 686c01de4dab30ac426cc3de79cfff2d632c3129
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_2d_amap: c17f503c128646126c12f394cee379930a058796
 
-PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
+PODFILE CHECKSUM: 8685ee79ad9489b94b9f1ac3974f4638bb57b02e
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.4
