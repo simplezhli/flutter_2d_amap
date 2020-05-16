@@ -8,6 +8,8 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -32,7 +34,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -61,7 +62,8 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
     private String keyWord = "";
     private boolean isPoiSearch;
     private static final String IS_POI_SEARCH = "isPoiSearch";
-    
+    private String city = "";
+
     AMap2DView(final Context context, BinaryMessenger messenger, int id, Map<String, Object> params, AMap2DDelegate delegate) {
         this.context = context;
         platformThreadHandler = new Handler(context.getMainLooper());
@@ -124,6 +126,7 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
         switch(method) {
             case "search":
                 keyWord = (String) request.get("keyWord");
+                city = (String) request.get("city");
                 search();
                 break;
             case "move":
@@ -184,7 +187,7 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
         if (!isPoiSearch) {
             return;
         }
-        query = new PoiSearch.Query(keyWord, SEARCH_CONTENT, "");
+        query = new PoiSearch.Query(keyWord, SEARCH_CONTENT, city);
         // 设置每页最多返回多少条poiitem
         query.setPageSize(50);
         query.setPageNum(0);

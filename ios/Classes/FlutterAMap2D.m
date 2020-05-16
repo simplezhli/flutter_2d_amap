@@ -53,17 +53,19 @@
     MAMapView* _mapView;
     int64_t _viewId;
     FlutterMethodChannel* _channel;
-    NSString* _types;
+    
     MAPointAnnotation* _pointAnnotation;
     bool _isPoiSearch;
 }
+
+NSString* _types = @"010000|010100|020000|030000|040000|050000|050100|060000|060100|060200|060300|060400|070000|080000|080100|080300|080500|080600|090000|090100|090200|090300|100000|100100|110000|110100|120000|120200|120300|130000|140000|141200|150000|150100|150200|160000|160100|170000|170100|170200|180000|190000|200000";
     
 - (instancetype)initWithFrame:(CGRect)frame
                viewIdentifier:(int64_t)viewId
                     arguments:(id _Nullable)args
               binaryMessenger:(NSObject<FlutterBinaryMessenger>*)messenger {
     if ([super init]) {
-        _types = @"010000|010100|020000|030000|040000|050000|050100|060000|060100|060200|060300|060400|070000|080000|080100|080300|080500|080600|090000|090100|090200|090300|100000|100100|110000|110100|120000|120200|120300|130000|140000|141200|150000|150100|150200|160000|160100|170000|170100|170200|180000|190000|200000";
+
         _viewId = viewId;
         NSString* channelName = [NSString stringWithFormat:@"plugins.weilu/flutter_2d_amap_%lld", viewId];
         _channel = [FlutterMethodChannel methodChannelWithName:channelName binaryMessenger:messenger];
@@ -139,7 +141,6 @@
             CLLocationCoordinate2D center;
             center.latitude = obj.location.latitude;
             center.longitude = obj.location.longitude;
-            [self->_mapView setZoomLevel:17 animated: YES];
             [self->_mapView setCenterCoordinate:center animated:YES];
             [self drawMarkers:obj.location.latitude lon:obj.location.longitude];
         }
@@ -194,13 +195,12 @@
 - (void)searchPOI:(CGFloat)lat lon:(CGFloat)lon{
     
     if (_isPoiSearch) {
-        AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
-        
+        AMapPOIAroundSearchRequest *request = [[AMapPOIAroundSearchRequest alloc] init];
         request.types               = _types;
         request.requireExtension    = YES;
         request.offset              = 50;
         request.location            = [AMapGeoPoint locationWithLatitude:lat longitude:lon];
-        [self.search AMapPOIKeywordsSearch:request];
+        [self.search AMapPOIAroundSearch:request];
     }
 }
 
@@ -212,6 +212,7 @@
             request.requireExtension    = YES;
             request.offset              = 50;
             request.keywords            = [call arguments][@"keyWord"];
+            request.city                = [call arguments][@"city"];
             [self.search AMapPOIKeywordsSearch:request];
         }
     } else if ([[call method] isEqualToString:@"move"]) {
