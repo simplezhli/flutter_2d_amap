@@ -21,12 +21,14 @@ class AMap2DView extends StatefulWidget {
     Key key,
     this.isPoiSearch: true,
     this.onPoiSearched,
-    this.onAMap2DViewCreated
+    this.onAMap2DViewCreated,
+    this.webKey,
   }) :super(key: key);
   
   final bool isPoiSearch;
   final AMap2DViewCreatedCallback onAMap2DViewCreated;
   final Function(List<PoiSearch>) onPoiSearched;
+  final String webKey;
   
   @override
   AMap2DViewState createState() => AMap2DViewState();

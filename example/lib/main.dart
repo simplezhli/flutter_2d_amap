@@ -31,6 +31,7 @@ class _MyAppState extends State<MyApp> {
               Expanded(
                 flex: 9,
                 child: AMap2DView(
+                  webKey: '4e479545913a3a180b3cffc267dad646',
                   onPoiSearched: (result) {
                     _controller.animateTo(0.0, duration: Duration(milliseconds: 10), curve: Curves.ease);
                     setState(() {
