@@ -22,13 +22,13 @@ class AMap2DViewState extends State<AMap2DView> {
 
     var promise = load(LoaderOptions(
       key: widget.webKey,
+      version: '1.4.15',
       plugins: ['AMap.Scale', 'AMap.Geolocation', 'AMap.PlaceSearch'],
     ));
 
     promiseToFuture(promise).then((value){
       MapOptions _mapOptions = MapOptions(
         zoom: 13,
-        center: LngLat(116.397428, 39.90923),
       );
       _aMap = AMap(_element, _mapOptions);
       
@@ -46,7 +46,19 @@ class AMap2DViewState extends State<AMap2DView> {
 
       _aMap.add(Marker(_markerOptions));
 
-      _aMap.addControl(Scale());
+      _aMap.plugin(['AMap.Scale', 'AMap.Geolocation', 'AMap.PlaceSearch'], () {
+        _aMap.addControl(Scale());
+      });
+      /// 定位
+//      Geolocation geolocation = Geolocation(GeolocationOptions());
+//      geolocation.getCurrentPosition((status, result) {
+//        print('$status ==== $result');
+//        if (status == 'complete') {
+//          print(result.position);
+//        } else {
+//          print(result.message);
+//        }
+//      });
       
       final AMap2DWebController controller = AMap2DWebController(_aMap);
       if (widget.onAMap2DViewCreated != null) {

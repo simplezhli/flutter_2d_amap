@@ -3,6 +3,9 @@ library amap;
 
 import 'package:js/js.dart';
 
+typedef Func0<R> = R Function();
+typedef Func1<A, R> = R Function(A a);
+
 /// 地图部分
 @JS('Map')
 class AMap {
@@ -17,6 +20,8 @@ class AMap {
   external remove(dynamic /*Array | Marker*/ features);
   /// 删除所有覆盖物
   external clearMap();
+  /// 加载插件
+  external plugin(dynamic/*String/List*/ name, void Function() callback);
   /// 添加控件，参数可以是插件列表中的任何插件对象，如：ToolBar、OverView、Scale等 
   external addControl(Control control);
   /// 销毁地图，并清空地图容器
@@ -26,7 +31,7 @@ class AMap {
 @JS()
 class Geolocation {
   external Geolocation(GeolocationOptions opts);
-  external getCurrentPosition();
+  external getCurrentPosition(Function(String status, GeolocationResult result) callback);
 }
 
 @JS()
@@ -129,9 +134,9 @@ class GeolocationOptions {
         /// 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
         Pixel buttonOffset,
         ///  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-        bool zoomToAccuracy = true,
+        bool zoomToAccuracy,
         ///  定位按钮的排放位置,  RB表示右下 
-        String buttonPosition = 'RB',
+        String buttonPosition,
       }
   );
 }
@@ -146,4 +151,11 @@ class IconOptions {
         Size imageSize,
       }
   );
+}
+
+@JS()
+@anonymous
+class GeolocationResult {
+  external LngLat get position;
+  external String get message;
 }
