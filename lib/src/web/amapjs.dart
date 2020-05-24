@@ -130,7 +130,7 @@ class GeolocationOptions {
         /// 是否使用高精度定位，默认：true
         bool enableHighAccuracy,
         /// 设置定位超时时间，默认：无穷大
-        int timeout = 10000,
+        int timeout,
         /// 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
         Pixel buttonOffset,
         ///  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false

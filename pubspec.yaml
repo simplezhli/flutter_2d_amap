@@ -33,6 +33,3 @@ flutter:
         pluginClass: Flutter2dAmapPlugin
       ios:
         pluginClass: Flutter2dAmapPlugin
-
-  assets:
-    - assets/map.html

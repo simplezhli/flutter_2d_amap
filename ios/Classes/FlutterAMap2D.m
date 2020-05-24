@@ -141,6 +141,7 @@ NSString* _types = @"010000|010100|020000|030000|040000|050000|050100|060000|060
             CLLocationCoordinate2D center;
             center.latitude = obj.location.latitude;
             center.longitude = obj.location.longitude;
+            [self->_mapView setZoomLevel:17 animated: YES];
             [self->_mapView setCenterCoordinate:center animated:YES];
             [self drawMarkers:obj.location.latitude lon:obj.location.longitude];
         }
