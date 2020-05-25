@@ -3,9 +3,6 @@ library amap;
 
 import 'package:js/js.dart';
 
-typedef Func0<R> = R Function();
-typedef Func1<A, R> = R Function(A a);
-
 /// 地图部分
 @JS('Map')
 class AMap {
@@ -26,6 +23,8 @@ class AMap {
   external addControl(Control control);
   /// 销毁地图，并清空地图容器
   external destroy();
+
+  external on(String eventName, void Function(MapsEvent event) callback);
 }
 
 @JS()
@@ -36,10 +35,10 @@ class Geolocation {
 
 @JS()
 class PlaceSearch {
-  /// AMap.event.addListener(MSearch, "complete", keywordSearch_CallBack); //返回结果
-  external search(String keyword);
+  external PlaceSearch(PlaceSearchOptions opts);
+  external search(String keyword, Function(String status, SearchResult result) callback);
   /// 根据中心点经纬度、半径以及关键字进行周边查询 radius取值范围：0-50000
-  external searchNearBy(String keyword, LngLat center, num radius);
+  external searchNearBy(String keyword, LngLat center, num radius, Function(String status, SearchResult result) callback);
   external setType(String type);
   external setPageIndex(int pageIndex);
   external setPageSize(int pageSize);
@@ -48,6 +47,8 @@ class PlaceSearch {
 
 @JS()
 class LngLat {
+  external num getLng();
+  external num getLat();
   external LngLat(num lng, num lat);
 }
 
@@ -88,6 +89,12 @@ class Size {
 
 @JS()
 @anonymous
+class MapsEvent {
+  external LngLat get lnglat;
+}
+
+@JS()
+@anonymous
 class MapOptions {
   external LngLat get center;
   external num get zoom;
@@ -108,6 +115,7 @@ class MapOptions {
 @JS()
 @anonymous
 class MarkerOptions {
+  external setPosition(LngLat lngLat);
   external factory MarkerOptions(
       {
         /// 要显示该marker的地图对象
@@ -143,6 +151,18 @@ class GeolocationOptions {
 
 @JS()
 @anonymous
+class PlaceSearchOptions {
+  external factory PlaceSearchOptions(
+      {
+        ///此项默认值：base，返回基本地址信息
+        /// 取值：all，返回基本+详细信息
+        String extensions,
+      }
+  );
+}
+
+@JS()
+@anonymous
 class IconOptions {
   external factory IconOptions(
       {
@@ -158,4 +178,30 @@ class IconOptions {
 class GeolocationResult {
   external LngLat get position;
   external String get message;
+}
+
+@JS()
+@anonymous
+class SearchResult {
+  external PoiList get poiList;
+  /// 成功状态说明
+  external String get info;
+}
+
+@JS()
+@anonymous
+class PoiList {
+  external List<Poi> get pois;
+}
+
+@JS()
+@anonymous
+class Poi {
+  external String get citycode;
+  external String get cityname;
+  external String get pname;
+  external String get pcode;
+  external LngLat get location;
+  external String get adname;
+  external String get name;
 }

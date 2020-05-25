@@ -21,12 +21,14 @@ class AMap2DMobileController extends AMap2DController {
     switch(method) {
       case 'poiSearchResult':
         {
-          Map args = call.arguments;
-          List<PoiSearch> list = [];
-          (json.decode(args['poiSearchResult']) as List).forEach((value) {
-            list.add(PoiSearch.fromJsonMap(value));
-          });
-          _widget.onPoiSearched(list);
+          if (_widget.onPoiSearched != null) {
+            Map args = call.arguments;
+            List<PoiSearch> list = [];
+            (json.decode(args['poiSearchResult']) as List).forEach((value) {
+              list.add(PoiSearch.fromJsonMap(value));
+            });
+            _widget.onPoiSearched(list);
+          }
           return Future.value("");
         }
     }

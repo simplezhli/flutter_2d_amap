@@ -9,6 +9,17 @@ class PoiSearch {
   String provinceCode;
   String latitude;
   String longitude;
+  
+  PoiSearch({
+		this.cityCode,
+		this.cityName,
+		this.provinceName,
+		this.title,
+		this.adName,
+		this.provinceCode,
+		this.latitude,
+		this.longitude,
+  });
 
 	PoiSearch.fromJsonMap(Map<String, dynamic> map): 
 		cityCode = map['cityCode'],
