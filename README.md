@@ -10,6 +10,7 @@
 
 ## 实现功能包括
 
+* 支持Android、iOS、Web
 * 处理地图所需权限申请
 * 定位并自动移动地图至当前位置
 * 默认获取POI数据并返回
@@ -83,17 +84,35 @@ Flutter2dAMap.setApiKey("配置你的key");
 在info.plist中增加:
 
 ```xml
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>地图功能需要您的定位服务，否则无法使用，如果您需要使用后台定位功能请选择“始终允许”。</string>
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+<string>地图功能需要您的定位服务，否则无法使用，如果您需要使用后台定位功能请选择“始终允许”。</string>
 
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>地图功能需要您的定位服务，否则无法使用。</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>地图功能需要您的定位服务，否则无法使用。</string>
 
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>地图功能需要您的定位服务，否则无法使用。</string>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>地图功能需要您的定位服务，否则无法使用。</string>
 
-    <key>io.flutter.embedded_views_preview</key>
-    <true/>
+<key>io.flutter.embedded_views_preview</key>
+<true/>
+
+```
+
+### Web
+
+`index.html`中添加（在`main.dart.js`之前）：
+
+```html
+<script src="https://webapi.amap.com/loader.js"></script>
+```
+
+使用`AMap2DView`时添加 `webKey`：
+
+```dart
+
+AMap2DView(
+  webKey: 'xxx',
+)
 
 ```
 

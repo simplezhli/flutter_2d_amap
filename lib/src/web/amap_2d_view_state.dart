@@ -7,17 +7,17 @@ import 'package:flutter_2d_amap/src/web/amap_2d_controller.dart';
 import 'package:flutter_2d_amap/src/web/amapjs.dart';
 import 'package:flutter_2d_amap/src/web/loaderjs.dart';
 import 'package:js/js.dart';
-import 'package:uuid/uuid.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 
 class AMap2DViewState extends State<AMap2DView> {
 
-  final htmlId = 'amap-${Uuid().v1()}';
+  /// 加载的插件
   final plugins = ['AMap.Geolocation', 'AMap.PlaceSearch']; // 'AMap.Scale', 'AMap.ToolBar',
-
+  
   AMap _aMap;
+  String _divId;
   DivElement _element;
 
   void _onPlatformViewCreated() {
@@ -30,7 +30,8 @@ class AMap2DViewState extends State<AMap2DView> {
 
     promiseToFuture(promise).then((value){
       MapOptions _mapOptions = MapOptions(
-        zoom: 13,
+        zoom: 11,
+        resizeEnable: true,
       );
       _aMap = AMap(_element, _mapOptions);
       /// 加载插件
@@ -59,11 +60,12 @@ class AMap2DViewState extends State<AMap2DView> {
   @override
   void initState() {
     super.initState();
+    _divId = DateTime.now().toIso8601String();
     /// 先创建div并注册
     // ignore: undefined_prefixed_name
-    ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
+    ui.platformViewRegistry.registerViewFactory(_divId, (int viewId) {
       _element = DivElement()
-        ..id = htmlId
+        ..id = _divId
         ..style.width = '100%'
         ..style.height = '100%'
         ..style.border = 'none'
@@ -79,8 +81,14 @@ class AMap2DViewState extends State<AMap2DView> {
   
   @override
   Widget build(BuildContext context) {
-    return HtmlElementView(
-      viewType: htmlId,
+    return LayoutBuilder(
+      builder: (context, constraints) => Container(
+        constraints: BoxConstraints(maxHeight: constraints.maxHeight),
+        child: HtmlElementView(viewType: _divId),
+      ),
     );
+//    return HtmlElementView(
+//      viewType: _divId,
+//    );
   }
 }

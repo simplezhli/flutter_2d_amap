@@ -3,7 +3,7 @@ library amap;
 
 import 'package:js/js.dart';
 
-/// 地图部分
+/// 高德地图js，文档：https://lbs.amap.com/api/javascript-api/guide/abc/prepare
 @JS('Map')
 class AMap {
   external AMap(dynamic /*String|DivElement*/ div, MapOptions opts);
@@ -100,77 +100,72 @@ class MapOptions {
   external num get zoom;
   external String get viewMode;
   
-  external factory MapOptions(
-      {
-        /// 初始中心经纬度
-        LngLat center,
-        /// 地图显示的缩放级别
-        num zoom,
-        /// 地图视图模式, 默认为‘2D’
-        String /*‘2D’|‘3D’*/ viewMode,
-      }
-  );
+  external factory MapOptions({
+    /// 初始中心经纬度
+    LngLat center,
+    bool resizeEnable,
+    /// 地图显示的缩放级别
+    num zoom,
+    /// 地图视图模式, 默认为‘2D’
+    String /*‘2D’|‘3D’*/ viewMode,
+  });
 }
 
 @JS()
 @anonymous
 class MarkerOptions {
-  external setPosition(LngLat lngLat);
-  external factory MarkerOptions(
-      {
-        /// 要显示该marker的地图对象
-        AMap map,
-        /// 点标记在地图上显示的位置
-        LngLat position,
-        AMapIcon icon,
-        String title,
-        Pixel offset,
-        String anchor,
-      }
-  );
+  external LngLat get position;
+  external set position(LngLat v);
+  external factory MarkerOptions({
+    /// 要显示该marker的地图对象
+    AMap map,
+    /// 点标记在地图上显示的位置
+    LngLat position,
+    AMapIcon icon,
+    String title,
+    Pixel offset,
+    String anchor,
+  });
 }
 
 @JS()
 @anonymous
 class GeolocationOptions {
-  external factory GeolocationOptions(
-      {
-        /// 是否使用高精度定位，默认：true
-        bool enableHighAccuracy,
-        /// 设置定位超时时间，默认：无穷大
-        int timeout,
-        /// 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
-        Pixel buttonOffset,
-        ///  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-        bool zoomToAccuracy,
-        ///  定位按钮的排放位置,  RB表示右下 
-        String buttonPosition,
-      }
-  );
+  external factory GeolocationOptions({
+    /// 是否使用高精度定位，默认：true
+    bool enableHighAccuracy,
+    /// 设置定位超时时间，默认：无穷大
+    int timeout,
+    /// 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
+    Pixel buttonOffset,
+    ///  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+    bool zoomToAccuracy,
+    ///  定位按钮的排放位置,  RB表示右下 
+    String buttonPosition,
+  });
 }
 
 @JS()
 @anonymous
 class PlaceSearchOptions {
-  external factory PlaceSearchOptions(
-      {
-        ///此项默认值：base，返回基本地址信息
-        /// 取值：all，返回基本+详细信息
-        String extensions,
-      }
-  );
+  external factory PlaceSearchOptions({
+    ///此项默认值：base，返回基本地址信息
+    /// 取值：all，返回基本+详细信息
+    String extensions,
+    String type,
+    int pageSize,
+    int pageIndex,
+  });
 }
 
 @JS()
 @anonymous
 class IconOptions {
-  external factory IconOptions(
-      {
-        Size size,
-        String image,
-        Size imageSize,
-      }
-  );
+  external factory IconOptions({
+    Size size,
+    String image,
+    Size imageSize,
+  });
 }
 
 @JS()
@@ -192,6 +187,8 @@ class SearchResult {
 @anonymous
 class PoiList {
   external List<Poi> get pois;
+  /// 查询结果总数
+  external int get count;
 }
 
 @JS()

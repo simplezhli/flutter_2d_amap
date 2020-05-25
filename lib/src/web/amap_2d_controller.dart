@@ -12,9 +12,17 @@ class AMap2DWebController extends AMap2DController {
   AMap _aMap;
   Geolocation _geolocation;
   MarkerOptions _markerOptions;
-  static const String _kTYPE = "010000|010100|020000|030000|040000|050000|050100|060000|060100|060200|060300|060400|070000|080000|080100|080300|080500|080600|090000|090100|090200|090300|100000|100100|110000|110100|120000|120200|120300|130000|140000|141200|150000|150100|150200|160000|160100|170000|170100|170200|180000|190000|200000";
+  PlaceSearchOptions _placeSearchOptions;
+  static const String _kType = "010000|010100|020000|030000|040000|050000|050100|060000|060100|060200|060300|060400|070000|080000|080100|080300|080500|080600|090000|090100|090200|090300|100000|100100|110000|110100|120000|120200|120300|130000|140000|141200|150000|150100|150200|160000|160100|170000|170100|170200|180000|190000|200000";
   
   AMap2DWebController(this._aMap, this._widget) {
+
+    _placeSearchOptions = PlaceSearchOptions(
+      extensions: 'all',
+      type: _kType,
+      pageIndex: 1,
+      pageSize: 50,
+    );
 
     _aMap.on('click', allowInterop((event) { 
       searchNearBy(LngLat(event.lnglat.getLng(), event.lnglat.getLat()));
@@ -37,11 +45,8 @@ class AMap2DWebController extends AMap2DController {
     if (!_widget.isPoiSearch) {
       return;
     }
-    PlaceSearch placeSearch = PlaceSearch(PlaceSearchOptions(extensions: 'all'));
+    PlaceSearch placeSearch = PlaceSearch(_placeSearchOptions);
     placeSearch.setCity(city);
-    placeSearch.setPageIndex(1);
-    placeSearch.setPageSize(50);
-    placeSearch.setType(_kTYPE);
     placeSearch.search(keyWord, searchResult);
     return Future.value();
   }
@@ -63,7 +68,7 @@ class AMap2DWebController extends AMap2DController {
       );
       
     } else {
-      _markerOptions.setPosition(lngLat);
+      _markerOptions.position = lngLat;
     }
     _aMap.clearMap();
     _aMap.add(Marker(_markerOptions));
@@ -74,7 +79,7 @@ class AMap2DWebController extends AMap2DController {
   Future<void> location() async {
     _geolocation.getCurrentPosition(allowInterop((status, result) {
       if (status == 'complete') {
-        _aMap.setZoom(18);
+        _aMap.setZoom(17);
         _aMap.setCenter(result.position);
         searchNearBy(result.position);
       } else {
@@ -92,10 +97,7 @@ class AMap2DWebController extends AMap2DController {
     if (!_widget.isPoiSearch) {
       return;
     }
-    PlaceSearch placeSearch = PlaceSearch(PlaceSearchOptions(extensions: 'all'));
-    placeSearch.setPageIndex(1);
-    placeSearch.setPageSize(50);
-    placeSearch.setType(_kTYPE);
+    PlaceSearch placeSearch = PlaceSearch(_placeSearchOptions);
     placeSearch.searchNearBy('', lngLat, 2000, searchResult);
   }
   
@@ -125,7 +127,7 @@ class AMap2DWebController extends AMap2DController {
     }
     /// 默认点移动到搜索结果的第一条
     if (list.length > 0) {
-      _aMap.setZoom(18);
+      _aMap.setZoom(17);
       move(list[0].latitude, list[0].longitude);
     }
     
