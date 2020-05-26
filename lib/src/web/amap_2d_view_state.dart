@@ -1,7 +1,9 @@
 
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:js_util';
-import 'dart:ui' as ui;
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
+import 'dart:ui' as ui;
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_2d_amap/src/web/amap_2d_controller.dart';
 import 'package:flutter_2d_amap/src/web/amapjs.dart';
@@ -81,14 +83,8 @@ class AMap2DViewState extends State<AMap2DView> {
   
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) => Container(
-        constraints: BoxConstraints(maxHeight: constraints.maxHeight),
-        child: HtmlElementView(viewType: _divId),
-      ),
+    return HtmlElementView(
+      viewType: _divId,
     );
-//    return HtmlElementView(
-//      viewType: _divId,
-//    );
   }
 }
