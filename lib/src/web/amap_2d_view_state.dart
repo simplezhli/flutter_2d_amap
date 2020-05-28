@@ -35,6 +35,7 @@ class AMap2DViewState extends State<AMap2DView> {
         zoom: 11,
         resizeEnable: true,
       );
+      /// 无法使用id https://github.com/flutter/flutter/issues/40080
       _aMap = AMap(_element, _mapOptions);
       /// 加载插件
       _aMap.plugin(plugins, allowInterop(() {
@@ -67,10 +68,8 @@ class AMap2DViewState extends State<AMap2DView> {
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(_divId, (int viewId) {
       _element = DivElement()
-        ..id = _divId
         ..style.width = '100%'
         ..style.height = '100%'
-        ..style.border = 'none'
         ..style.margin = '0';
 
       return _element;

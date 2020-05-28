@@ -104,18 +104,19 @@ class AMap2DWebController extends AMap2DController {
     if (status == 'complete') {
       if (result is SearchResult) {
         result.poiList?.pois?.forEach((poi) {
-          
-          PoiSearch poiSearch = PoiSearch(
-            cityCode: poi.citycode,
-            cityName: poi.cityname,
-            provinceName: poi.pname,
-            title: poi.name,
-            adName: poi.adname,
-            provinceCode: poi.pcode,
-            latitude: poi.location.getLat().toString(),
-            longitude: poi.location.getLng().toString(),
-          );
-          list.add(poiSearch);
+          if (poi is Poi) {
+            PoiSearch poiSearch = PoiSearch(
+              cityCode: poi.citycode,
+              cityName: poi.cityname,
+              provinceName: poi.pname,
+              title: poi.name,
+              adName: poi.adname,
+              provinceCode: poi.pcode,
+              latitude: poi.location.getLat().toString(),
+              longitude: poi.location.getLng().toString(),
+            );
+            list.add(poiSearch);
+          }
         });
       }
     } else if (status == 'no_data'){

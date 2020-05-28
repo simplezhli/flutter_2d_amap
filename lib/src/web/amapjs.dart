@@ -18,7 +18,7 @@ class AMap {
   /// 删除所有覆盖物
   external clearMap();
   /// 加载插件
-  external plugin(dynamic/*String/List*/ name, void Function() callback);
+  external plugin(dynamic/*String|List*/ name, void Function() callback);
   /// 添加控件，参数可以是插件列表中的任何插件对象，如：ToolBar、OverView、Scale等 
   external addControl(Control control);
   /// 销毁地图，并清空地图容器
@@ -186,7 +186,7 @@ class SearchResult {
 @JS()
 @anonymous
 class PoiList {
-  external List<Poi> get pois;
+  external List<dynamic> get pois;
   /// 查询结果总数
   external int get count;
 }
