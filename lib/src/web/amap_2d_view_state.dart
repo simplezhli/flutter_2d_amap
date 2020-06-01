@@ -16,7 +16,7 @@ import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 class AMap2DViewState extends State<AMap2DView> {
 
   /// 加载的插件
-  final plugins = ['AMap.Geolocation', 'AMap.PlaceSearch']; // 'AMap.Scale', 'AMap.ToolBar',
+  final plugins = ['AMap.Geolocation', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.ToolBar'];
   
   AMap _aMap;
   String _divId;
@@ -39,8 +39,8 @@ class AMap2DViewState extends State<AMap2DView> {
       _aMap = AMap(_element, _mapOptions);
       /// 加载插件
       _aMap.plugin(plugins, allowInterop(() {
-//        _aMap.addControl(Scale());
-//        _aMap.addControl(ToolBar());
+        _aMap.addControl(Scale());
+        _aMap.addControl(ToolBar());
 
         final AMap2DWebController controller = AMap2DWebController(_aMap, widget);
         if (widget.onAMap2DViewCreated != null) {

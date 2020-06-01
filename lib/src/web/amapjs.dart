@@ -28,7 +28,7 @@ class AMap {
 }
 
 @JS()
-class Geolocation {
+class Geolocation extends Control {
   external Geolocation(GeolocationOptions opts);
   external getCurrentPosition(Function(String status, GeolocationResult result) callback);
 }

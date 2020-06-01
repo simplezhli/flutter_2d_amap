@@ -10,7 +10,7 @@
 
 ## 实现功能包括
 
-* 支持Android、iOS、Web
+* 支持Android、iOS、Web（[玩玩Flutter Web —— 实现高德地图插件](https://weilu.blog.csdn.net/article/details/106465792)）
 * 处理地图所需权限申请
 * 定位并自动移动地图至当前位置
 * 默认获取POI数据并返回

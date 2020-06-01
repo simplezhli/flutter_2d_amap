@@ -34,6 +34,7 @@ class AMap2DWebController extends AMap2DController {
       zoomToAccuracy: true,
     ));
 
+    _aMap.addControl(_geolocation);
     location();
   }
 
