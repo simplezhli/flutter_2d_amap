@@ -263,16 +263,18 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
 
     @Override
     public void onPoiSearched(PoiResult result, int code) {
-        
+
+        builder.delete(0, builder.length());
+        // 拼接json（避免引用gson之类的库，小插件不必要。。。）
+        builder.append("[");
+
         if (code == AMapException.CODE_AMAP_SUCCESS) {
             // 搜索poi的结果
             if (result != null && result.getQuery() != null) {
                 // 是否是同一条
                 if (result.getQuery().equals(query)) {
                     final List<PoiItem> list = result.getPois();
-                    builder.delete(0, builder.length());
-                    // 拼接json（避免引用gson之类的库，小插件不必要。。。）
-                    builder.append("[");
+
                     for (int i = 0; i < list.size(); i++) {
                         PoiItem item = list.get(i);
                         builder.append("{");
@@ -289,26 +291,27 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
                             builder.deleteCharAt(builder.length() - 1);
                         }
                     }
-                    builder.append("]");
-                    postMessageRunnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            Map<String, String> map = new HashMap<>(2);
-                            map.put("poiSearchResult", builder.toString());
-                            methodChannel.invokeMethod("poiSearchResult", map);
-                        }
-                    };
-                    if (platformThreadHandler.getLooper() == Looper.myLooper()) {
-                        postMessageRunnable.run();
-                    } else {
-                        platformThreadHandler.post(postMessageRunnable);
-                    }
+
                     if (list.size() > 0) {
                         aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
                         move(list.get(0).getLatLonPoint().getLatitude(), list.get(0).getLatLonPoint().getLongitude());
                     }
                 }
             }
+        }
+        builder.append("]");
+        postMessageRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Map<String, String> map = new HashMap<>(2);
+                map.put("poiSearchResult", builder.toString());
+                methodChannel.invokeMethod("poiSearchResult", map);
+            }
+        };
+        if (platformThreadHandler.getLooper() == Looper.myLooper()) {
+            postMessageRunnable.run();
+        } else {
+            platformThreadHandler.post(postMessageRunnable);
         }
     }
 

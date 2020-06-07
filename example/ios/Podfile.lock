@@ -1,11 +1,11 @@
 PODS:
   - AMap2DMap (5.6.1):
     - AMapFoundation (~> 1.4)
-  - AMapFoundation (1.5.7)
-  - AMapLocation (2.6.2):
-    - AMapFoundation (~> 1.4)
-  - AMapSearch (6.9.0):
-    - AMapFoundation (~> 1.4)
+  - AMapFoundation (1.6.3)
+  - AMapLocation (2.6.5):
+    - AMapFoundation (~> 1.6.3)
+  - AMapSearch (7.3.0):
+    - AMapFoundation (~> 1.6.3)
   - Flutter (1.0.0)
   - flutter_2d_amap (0.0.1):
     - AMap2DMap
@@ -32,12 +32,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AMap2DMap: cac76bc057de18a1641f34df6b50bf5bc6b23571
-  AMapFoundation: 216d58448c80356434ac4332250a8fdb2f5c4d1e
-  AMapLocation: 89a7e4eb6040d32ba73c77a4966ecc66e46aa7c3
-  AMapSearch: af02822537e55b85a4752e9df5c19e4b9da82031
+  AMapFoundation: 9ed923193b357ebb30a073e9fe255d3c24054d5a
+  AMapLocation: c566d448285cd502c1e313063d9e2460bd4d7100
+  AMapSearch: a048bcca3bf0b8083345070e1f193f814bd8dc01
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_2d_amap: c17f503c128646126c12f394cee379930a058796
 
 PODFILE CHECKSUM: 8685ee79ad9489b94b9f1ac3974f4638bb57b02e
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1

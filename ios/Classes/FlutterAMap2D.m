@@ -129,6 +129,8 @@ NSString* _types = @"010000|010100|020000|030000|040000|050000|050100|060000|060
 /* POI 搜索回调. */
 - (void)onPOISearchDone:(AMapPOISearchBaseRequest *)request response:(AMapPOISearchResponse *)response{
     if (response.pois.count == 0) {
+        NSDictionary* arguments = @{@"poiSearchResult" : @"[]"};
+        [_channel invokeMethod:@"poiSearchResult" arguments:arguments];
         return;
     }
     
