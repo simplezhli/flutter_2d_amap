@@ -5,13 +5,6 @@ import 'package:flutter_2d_amap/src/interface/amap_2d_controller.dart';
 import 'package:flutter_2d_amap/src/web/amapjs.dart';
 
 class AMap2DWebController extends AMap2DController {
-
-  AMap2DView _widget;
-  AMap _aMap;
-  Geolocation _geolocation;
-  MarkerOptions _markerOptions;
-  PlaceSearchOptions _placeSearchOptions;
-  static const String _kType = "010000|010100|020000|030000|040000|050000|050100|060000|060100|060200|060300|060400|070000|080000|080100|080300|080500|080600|090000|090100|090200|090300|100000|100100|110000|110100|120000|120200|120300|130000|140000|141200|150000|150100|150200|160000|160100|170000|170100|170200|180000|190000|200000";
   
   AMap2DWebController(this._aMap, this._widget) {
 
@@ -38,13 +31,20 @@ class AMap2DWebController extends AMap2DController {
     location();
   }
 
+  final AMap2DView _widget;
+  final AMap _aMap;
+  Geolocation _geolocation;
+  MarkerOptions _markerOptions;
+  PlaceSearchOptions _placeSearchOptions;
+  static const String _kType = '010000|010100|020000|030000|040000|050000|050100|060000|060100|060200|060300|060400|070000|080000|080100|080300|080500|080600|090000|090100|090200|090300|100000|100100|110000|110100|120000|120200|120300|130000|140000|141200|150000|150100|150200|160000|160100|170000|170100|170200|180000|190000|200000';
+
   /// city：cityName（中文或中文全拼）、cityCode均可
   @override
   Future<void> search(String keyWord, {city = ''}) async {
     if (!_widget.isPoiSearch) {
       return;
     }
-    PlaceSearch placeSearch = PlaceSearch(_placeSearchOptions);
+    final PlaceSearch placeSearch = PlaceSearch(_placeSearchOptions);
     placeSearch.setCity(city);
     placeSearch.search(keyWord, searchResult);
     return Future.value();
@@ -52,7 +52,7 @@ class AMap2DWebController extends AMap2DController {
 
   @override
   Future<void> move(String lat, String lon) async {
-    LngLat lngLat = LngLat(double.parse(lon), double.parse(lat));
+    final LngLat lngLat = LngLat(double.parse(lon), double.parse(lat));
     _aMap.setCenter(lngLat);
     if (_markerOptions == null) {
       _markerOptions = MarkerOptions(
@@ -96,17 +96,17 @@ class AMap2DWebController extends AMap2DController {
     if (!_widget.isPoiSearch) {
       return;
     }
-    PlaceSearch placeSearch = PlaceSearch(_placeSearchOptions);
+    final PlaceSearch placeSearch = PlaceSearch(_placeSearchOptions);
     placeSearch.searchNearBy('', lngLat, 2000, searchResult);
   }
-  
-  get searchResult => allowInterop((status, result) {
-    List<PoiSearch> list = [];
+
+  Function(String status, SearchResult result) get searchResult => allowInterop((status, result) {
+    final List<PoiSearch> list = <PoiSearch>[];
     if (status == 'complete') {
       if (result is SearchResult) {
-        result.poiList?.pois?.forEach((poi) {
+        result.poiList?.pois?.forEach((dynamic poi) {
           if (poi is Poi) {
-            PoiSearch poiSearch = PoiSearch(
+            final PoiSearch poiSearch = PoiSearch(
               cityCode: poi.citycode,
               cityName: poi.cityname,
               provinceName: poi.pname,
@@ -126,7 +126,7 @@ class AMap2DWebController extends AMap2DController {
       print(result);
     }
     /// 默认点移动到搜索结果的第一条
-    if (list.length > 0) {
+    if (list.isNotEmpty) {
       _aMap.setZoom(17);
       move(list[0].latitude, list[0].longitude);
     }

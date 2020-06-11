@@ -10,8 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  #  https://pub.flutter-io.cn/packages/js#-readme-tab-
-  js: ^0.6.1+1
+  #  https://pub.flutter-io.cn/packages/js
+  js: ^0.6.2
 
 dev_dependencies:
   flutter_test:

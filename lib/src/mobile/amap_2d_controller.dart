@@ -14,30 +14,30 @@ class AMap2DMobileController extends AMap2DController {
   }
   final MethodChannel _channel;
 
-  AMap2DView _widget;
+  final AMap2DView _widget;
 
   Future<dynamic> _handleMethod(MethodCall call) async {
-    String method = call.method;
+    final String method = call.method;
     switch(method) {
       case 'poiSearchResult':
         {
           if (_widget.onPoiSearched != null) {
-            Map args = call.arguments;
+            final Map args = call.arguments;
             List<PoiSearch> list = [];
             (json.decode(args['poiSearchResult']) as List).forEach((value) {
               list.add(PoiSearch.fromJsonMap(value));
             });
             _widget.onPoiSearched(list);
           }
-          return Future.value("");
+          return Future.value('');
         }
     }
-    return Future.value("");
+    return Future.value('');
   }
 
   /// city：cityName（中文或中文全拼）、cityCode均可
   @override
-  Future<void> search(String keyWord, {city = ''}) async {
+  Future<void> search(String keyWord, {String city = ''}) async {
     return await _channel.invokeMethod('search', <String, dynamic>{
       'keyWord': keyWord,
       'city': city,

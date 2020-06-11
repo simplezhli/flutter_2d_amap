@@ -47,9 +47,9 @@ class PlaceSearch {
 
 @JS()
 class LngLat {
+  external LngLat(num lng, num lat);
   external num getLng();
   external num getLat();
-  external LngLat(num lng, num lat);
 }
 
 @JS()
@@ -96,10 +96,7 @@ class MapsEvent {
 @JS()
 @anonymous
 class MapOptions {
-  external LngLat get center;
-  external num get zoom;
-  external String get viewMode;
-  
+ 
   external factory MapOptions({
     /// 初始中心经纬度
     LngLat center,
@@ -109,13 +106,16 @@ class MapOptions {
     /// 地图视图模式, 默认为‘2D’
     String /*‘2D’|‘3D’*/ viewMode,
   });
+
+  external LngLat get center;
+  external num get zoom;
+  external String get viewMode;
 }
 
 @JS()
 @anonymous
 class MarkerOptions {
-  external LngLat get position;
-  external set position(LngLat v);
+  
   external factory MarkerOptions({
     /// 要显示该marker的地图对象
     AMap map,
@@ -126,6 +126,9 @@ class MarkerOptions {
     Pixel offset,
     String anchor,
   });
+
+  external LngLat get position;
+  external set position(LngLat v);
 }
 
 @JS()

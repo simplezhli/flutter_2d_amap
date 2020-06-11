@@ -1,15 +1,6 @@
 
 class PoiSearch {
 
-  String cityCode;
-  String cityName;
-  String provinceName;
-  String title;
-  String adName;
-  String provinceCode;
-  String latitude;
-  String longitude;
-  
   PoiSearch({
 		this.cityCode,
 		this.cityName,
@@ -22,17 +13,26 @@ class PoiSearch {
   });
 
 	PoiSearch.fromJsonMap(Map<String, dynamic> map): 
-		cityCode = map['cityCode'],
-		cityName = map['cityName'],
-		provinceName = map['provinceName'],
-		title = map['title'],
-		adName = map['adName'],
-		provinceCode = map['provinceCode'],
-		latitude = map['latitude'],
-		longitude = map['longitude'];
+		cityCode = map['cityCode'] as String,
+		cityName = map['cityName'] as String,
+		provinceName = map['provinceName'] as String,
+		title = map['title'] as String,
+		adName = map['adName'] as String,
+		provinceCode = map['provinceCode'] as String,
+		latitude = map['latitude'] as String,
+		longitude = map['longitude'] as String;
+
+	String cityCode;
+	String cityName;
+	String provinceName;
+	String title;
+	String adName;
+	String provinceCode;
+	String latitude;
+	String longitude;
 
 	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
+		final Map<String, dynamic> data = <String, dynamic>{};
 		data['cityCode'] = cityCode;
 		data['cityName'] = cityName;
 		data['provinceName'] = provinceName;

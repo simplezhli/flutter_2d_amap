@@ -9,7 +9,7 @@ import 'amap_2d_view_state.dart'
     if (dart.library.html) 'web/amap_2d_view_state.dart'
     if (dart.library.io) 'mobile/amap_2d_view_state.dart';
 
-typedef void AMap2DViewCreatedCallback(AMap2DController controller);
+typedef AMap2DViewCreatedCallback = void Function(AMap2DController controller);
 
 class AMap2DView extends StatefulWidget {
   
