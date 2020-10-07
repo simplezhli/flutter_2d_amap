@@ -48,13 +48,18 @@ class _HtmlElementViewControllerEx extends PlatformViewController {
   }
 
   @override
-  void clearFocus() {}
+  Future<void> clearFocus() {
+    return null;
+  }
 
   @override
-  void dispatchPointerEvent(PointerEvent event) {}
+  Future<void> dispatchPointerEvent(PointerEvent event) {
+    return null;
+  }
 
   @override
-  void dispose() {
+  Future<void> dispose() {
     if (_initialized) SystemChannels.platform_views.invokeMethod<void>('dispose', viewId);
+    return null;
   }
 }
