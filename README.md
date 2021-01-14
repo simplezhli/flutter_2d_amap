@@ -17,6 +17,10 @@
 * 支持传入经纬度来移动地图
 * 支持搜索POI
 
+## 已知问题
+
+- https://github.com/simplezhli/flutter_2d_amap/issues/14
+
 ## 使用方式
 
 ```dart
