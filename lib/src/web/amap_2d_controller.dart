@@ -15,16 +15,18 @@ class AMap2DWebController extends AMap2DController {
       pageSize: 50,
     );
 
-    _aMap.on('click', allowInterop((event) { 
+    _aMap.on('click', allowInterop((event) {
+      //_aMap.resize(); /// 2.0无法自适应容器大小，需手动调用触发计算。
       searchNearBy(LngLat(event.lnglat.getLng(), event.lnglat.getLat()));
     }));
     
     /// 定位插件初始化
     _geolocation = Geolocation(GeolocationOptions(
       timeout: 15000,
-      buttonPosition: 'RB',
+      buttonPosition: 'RT',
       buttonOffset: Pixel(10, 20),
       zoomToAccuracy: true,
+      enableHighAccuracy: true,
     ));
 
     _aMap.addControl(_geolocation);

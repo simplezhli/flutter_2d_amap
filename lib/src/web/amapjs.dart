@@ -7,6 +7,8 @@ import 'package:js/js.dart';
 @JS('Map')
 class AMap {
   external AMap(dynamic /*String|DivElement*/ div, MapOptions opts);
+  /// 重新计算容器大小
+  external resize();
   /// 设置中心点 
   external setCenter(LngLat center);
   /// 设置地图显示的缩放级别，参数 zoom 可设范围：[2, 20]
@@ -135,16 +137,16 @@ class MarkerOptions {
 @anonymous
 class GeolocationOptions {
   external factory GeolocationOptions({
-    /// 是否使用高精度定位，默认：true
+    /// 是否使用高精度定位，默认：true 。2.0 默认为false
     bool enableHighAccuracy,
     /// 设置定位超时时间，默认：无穷大
     int timeout,
-    /// 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
+    /// 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)。 2.0为offset
     Pixel buttonOffset,
     ///  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
     bool zoomToAccuracy,
-    ///  定位按钮的排放位置,  RB表示右下 
-    String buttonPosition,
+    ///  定位按钮的排放位置, 'LT': 左上角, 'RT': 右上角, 'LB': 左下角, 'RB': 右下角。 2.0为position
+    String /*‘LT’|‘RT’|‘LB’|‘RB’*/buttonPosition,
   });
 }
 

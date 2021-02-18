@@ -26,7 +26,7 @@ class AMap2DViewState extends State<AMap2DView> {
 
     var promise = load(LoaderOptions(
       key: widget.webKey,
-      version: '1.4.15',
+      version: '1.4.15', // 2.0需要修改GeolocationOptions属性
       plugins: plugins,
     ));
 
