@@ -18,9 +18,9 @@ class AMap2DViewState extends State<AMap2DView> {
   /// 加载的插件
   final List<String> plugins = <String>['AMap.Geolocation', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.ToolBar'];
   
-  AMap _aMap;
-  String _divId;
-  DivElement _element;
+  late AMap _aMap;
+  late String _divId;
+  late DivElement _element;
 
   void _onPlatformViewCreated() {
 
@@ -44,7 +44,7 @@ class AMap2DViewState extends State<AMap2DView> {
 
         final AMap2DWebController controller = AMap2DWebController(_aMap, widget);
         if (widget.onAMap2DViewCreated != null) {
-          widget.onAMap2DViewCreated(controller);
+          widget.onAMap2DViewCreated!(controller);
         }
       }));
 
@@ -56,7 +56,6 @@ class AMap2DViewState extends State<AMap2DView> {
   @override
   void dispose() {
     _aMap.destroy();
-    _aMap = null;
     super.dispose();
   }
 
@@ -74,7 +73,7 @@ class AMap2DViewState extends State<AMap2DView> {
 
       return _element;
     });
-    SchedulerBinding.instance.addPostFrameCallback((_) {
+    SchedulerBinding.instance?.addPostFrameCallback((_) {
       /// 创建地图
       _onPlatformViewCreated();
     });

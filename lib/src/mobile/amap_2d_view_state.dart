@@ -17,7 +17,7 @@ class AMap2DViewState extends State<AMap2DView> {
     final AMap2DMobileController controller = AMap2DMobileController(id, widget);
     _controller.complete(controller);
     if (widget.onAMap2DViewCreated != null) {
-      widget.onAMap2DViewCreated(controller);
+      widget.onAMap2DViewCreated!(controller);
     }
   }
 
@@ -44,7 +44,7 @@ class AMap2DViewState extends State<AMap2DView> {
 
 /// 需要更多的初始化配置，可以在此处添加
 class _CreationParams {
-  _CreationParams({this.isPoiSearch});
+  _CreationParams({this.isPoiSearch = true});
 
   static _CreationParams fromWidget(AMap2DView widget) {
     return _CreationParams(

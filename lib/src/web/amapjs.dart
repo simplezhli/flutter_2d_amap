@@ -183,7 +183,7 @@ class GeolocationResult {
 @JS()
 @anonymous
 class SearchResult {
-  external PoiList get poiList;
+  external PoiList? get poiList;
   /// 成功状态说明
   external String get info;
 }
@@ -191,7 +191,7 @@ class SearchResult {
 @JS()
 @anonymous
 class PoiList {
-  external List<dynamic> get pois;
+  external List<dynamic>? get pois;
   /// 查询结果总数
   external int get count;
 }

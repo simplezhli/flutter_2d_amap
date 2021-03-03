@@ -11,7 +11,7 @@ class HtmlElementViewEx extends HtmlElementView {
   final PlatformViewCreatedCallback onPlatformViewCreated; //!!!
   final dynamic creationParams;
 
-  const HtmlElementViewEx({Key key, @required String viewType, this.onPlatformViewCreated, this.creationParams}) : super(key: key, viewType: viewType);
+  const HtmlElementViewEx({Key? key, required String viewType, required this.onPlatformViewCreated, this.creationParams}) : super(key: key, viewType: viewType);
 
   @override
   Widget build(BuildContext context) => PlatformViewLink(
@@ -49,17 +49,17 @@ class _HtmlElementViewControllerEx extends PlatformViewController {
 
   @override
   Future<void> clearFocus() {
-    return null;
+    return Future.value();
   }
 
   @override
   Future<void> dispatchPointerEvent(PointerEvent event) {
-    return null;
+    return Future.value();
   }
 
   @override
   Future<void> dispose() {
     if (_initialized) SystemChannels.platform_views.invokeMethod<void>('dispose', viewId);
-    return null;
+    return Future.value();
   }
 }

@@ -5,7 +5,7 @@ import 'package:flutter_2d_amap/src/interface/amap_2d_controller.dart';
 import 'package:flutter_2d_amap/src/web/amapjs.dart';
 
 class AMap2DWebController extends AMap2DController {
-  
+
   AMap2DWebController(this._aMap, this._widget) {
 
     _placeSearchOptions = PlaceSearchOptions(
@@ -35,9 +35,9 @@ class AMap2DWebController extends AMap2DController {
 
   final AMap2DView _widget;
   final AMap _aMap;
-  Geolocation _geolocation;
-  MarkerOptions _markerOptions;
-  PlaceSearchOptions _placeSearchOptions;
+  late Geolocation _geolocation;
+  MarkerOptions? _markerOptions;
+  late PlaceSearchOptions _placeSearchOptions;
   static const String _kType = '010000|010100|020000|030000|040000|050000|050100|060000|060100|060200|060300|060400|070000|080000|080100|080300|080500|080600|090000|090100|090200|090300|100000|100100|110000|110100|120000|120200|120300|130000|140000|141200|150000|150100|150200|160000|160100|170000|170100|170200|180000|190000|200000';
 
   /// city：cityName（中文或中文全拼）、cityCode均可
@@ -69,10 +69,10 @@ class AMap2DWebController extends AMap2DController {
       );
       
     } else {
-      _markerOptions.position = lngLat;
+      _markerOptions?.position = lngLat;
     }
     _aMap.clearMap();
-    _aMap.add(Marker(_markerOptions));
+    _aMap.add(Marker(_markerOptions!));
     return Future.value();
   }
 
@@ -130,11 +130,11 @@ class AMap2DWebController extends AMap2DController {
     /// 默认点移动到搜索结果的第一条
     if (list.isNotEmpty) {
       _aMap.setZoom(17);
-      move(list[0].latitude, list[0].longitude);
+      move(list[0].latitude!, list[0].longitude!);
     }
-    
+
     if (_widget.onPoiSearched != null) {
-      _widget.onPoiSearched(list);
+      _widget.onPoiSearched!(list);
     }
   });
 }

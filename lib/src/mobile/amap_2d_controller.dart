@@ -27,7 +27,7 @@ class AMap2DMobileController extends AMap2DController {
             (json.decode(args['poiSearchResult']) as List).forEach((value) {
               list.add(PoiSearch.fromJsonMap(value));
             });
-            _widget.onPoiSearched(list);
+            _widget.onPoiSearched!(list);
           }
           return Future.value('');
         }
