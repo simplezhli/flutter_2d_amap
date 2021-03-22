@@ -18,7 +18,7 @@ A new Flutter plugin.
   s.dependency 'AMap2DMap'
   s.dependency 'AMapSearch'
   s.dependency 'AMapLocation'
-
+  s.static_framework = true
   s.ios.deployment_target = '8.0'
 end
 
