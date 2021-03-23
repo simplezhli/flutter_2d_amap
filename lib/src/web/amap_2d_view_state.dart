@@ -25,7 +25,7 @@ class AMap2DViewState extends State<AMap2DView> {
   void _onPlatformViewCreated() {
 
     var promise = load(LoaderOptions(
-      key: widget.webKey,
+      key: Flutter2dAMap.webKey,
       version: '1.4.15', // 2.0需要修改GeolocationOptions属性
       plugins: plugins,
     ));

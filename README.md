@@ -81,7 +81,7 @@ AndroidManifest.xml 中添加：
 
 ```dart
 
-Flutter2dAMap.setApiKey("配置你的key");
+Flutter2dAMap.setApiKey(iOSKey: '配置你的key');
 
 ```
 
@@ -110,13 +110,11 @@ Flutter2dAMap.setApiKey("配置你的key");
 <script src="https://webapi.amap.com/loader.js"></script>
 ```
 
-使用`AMap2DView`时添加 `webKey`：
+使用前设置key：
 
 ```dart
 
-AMap2DView(
-  webKey: 'xxx',
-)
+Flutter2dAMap.setApiKey(webKey: '配置你的key');
 
 ```
 

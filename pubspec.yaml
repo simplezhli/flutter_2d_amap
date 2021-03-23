@@ -1,13 +1,13 @@
 name: flutter_2d_amap
 description: A flutter plugin for 2D amap.
-version: 0.2.0+1
+version: 0.2.0+2
 homepage: 'https://github.com/simplezhli/flutter_2d_amap'
 
 publish_to: 'none'
 
 environment:
   sdk: ">=2.12.0-0 <3.0.0"
-  flutter: ">=1.10.0 <2.0.0"
+  flutter: ">=1.10.0"
   
 dependencies:
   flutter:
