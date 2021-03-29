@@ -1,17 +1,16 @@
 
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:js_util';
-// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
+import 'dart:js_util';
 import 'dart:ui' as ui;
+
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 import 'package:flutter_2d_amap/src/web/amap_2d_controller.dart';
 import 'package:flutter_2d_amap/src/web/amapjs.dart';
 import 'package:flutter_2d_amap/src/web/loaderjs.dart';
 import 'package:js/js.dart';
-
-import 'package:flutter/widgets.dart';
-import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 
 class AMap2DViewState extends State<AMap2DView> {
 
@@ -24,14 +23,14 @@ class AMap2DViewState extends State<AMap2DView> {
 
   void _onPlatformViewCreated() {
 
-    var promise = load(LoaderOptions(
+    final Object promise = load(LoaderOptions(
       key: Flutter2dAMap.webKey,
       version: '1.4.15', // 2.0需要修改GeolocationOptions属性
       plugins: plugins,
-    ));
+    )) as Object;
 
-    promiseToFuture(promise).then((value){
-      MapOptions _mapOptions = MapOptions(
+    promiseToFuture<dynamic>(promise).then((dynamic value){
+      final MapOptions _mapOptions = MapOptions(
         zoom: 11,
         resizeEnable: true,
       );

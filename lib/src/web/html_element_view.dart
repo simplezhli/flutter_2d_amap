@@ -8,10 +8,11 @@ import 'package:flutter/widgets.dart';
 // https://github.com/flutter/flutter/issues/56181
 
 class HtmlElementViewEx extends HtmlElementView {
-  final PlatformViewCreatedCallback onPlatformViewCreated; //!!!
-  final dynamic creationParams;
 
   const HtmlElementViewEx({Key? key, required String viewType, required this.onPlatformViewCreated, this.creationParams}) : super(key: key, viewType: viewType);
+
+  final PlatformViewCreatedCallback onPlatformViewCreated; //!!!
+  final dynamic creationParams;
 
   @override
   Widget build(BuildContext context) => PlatformViewLink(
@@ -35,12 +36,13 @@ class HtmlElementViewEx extends HtmlElementView {
 }
 
 class _HtmlElementViewControllerEx extends PlatformViewController {
+
+  _HtmlElementViewControllerEx(this.viewId, this.viewType);
+
   @override
   final int viewId;
   final String viewType;
   bool _initialized = false;
-
-  _HtmlElementViewControllerEx(this.viewId, this.viewType);
 
   Future<void> _initialize() async {
     await SystemChannels.platform_views.invokeMethod<void>('create', {'id': viewId, 'viewType': viewType});
@@ -59,7 +61,8 @@ class _HtmlElementViewControllerEx extends PlatformViewController {
 
   @override
   Future<void> dispose() {
-    if (_initialized) SystemChannels.platform_views.invokeMethod<void>('dispose', viewId);
+    if (_initialized)
+      SystemChannels.platform_views.invokeMethod<void>('dispose', viewId);
     return Future.value();
   }
 }

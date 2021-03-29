@@ -22,23 +22,23 @@ class AMap2DMobileController extends AMap2DController {
       case 'poiSearchResult':
         {
           if (_widget.onPoiSearched != null) {
-            final Map args = call.arguments;
-            List<PoiSearch> list = [];
-            (json.decode(args['poiSearchResult']) as List).forEach((value) {
-              list.add(PoiSearch.fromJsonMap(value));
+            final Map args = call.arguments as Map<dynamic, dynamic>;
+            final List<PoiSearch> list = [];
+            (json.decode(args['poiSearchResult'] as String) as List).forEach((dynamic value) {
+              list.add(PoiSearch.fromJsonMap(value as Map<String, dynamic>));
             });
             _widget.onPoiSearched!(list);
           }
-          return Future.value('');
+          return Future<dynamic>.value('');
         }
     }
-    return Future.value('');
+    return Future<dynamic>.value('');
   }
 
   /// city：cityName（中文或中文全拼）、cityCode均可
   @override
   Future<void> search(String keyWord, {String city = ''}) async {
-    return await _channel.invokeMethod('search', <String, dynamic>{
+    return _channel.invokeMethod('search', <String, dynamic>{
       'keyWord': keyWord,
       'city': city,
     });
@@ -46,7 +46,7 @@ class AMap2DMobileController extends AMap2DController {
 
   @override
   Future<void> move(String lat, String lon) async {
-    return await _channel.invokeMethod('move', <String, dynamic>{
+    return _channel.invokeMethod('move', <String, dynamic>{
       'lat': lat,
       'lon': lon
     });
@@ -54,6 +54,6 @@ class AMap2DMobileController extends AMap2DController {
 
   @override
   Future<void> location() async {
-    return await _channel.invokeMethod('location');
+    return _channel.invokeMethod('location');
   }
 }
