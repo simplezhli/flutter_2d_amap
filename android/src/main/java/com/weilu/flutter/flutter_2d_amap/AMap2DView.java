@@ -40,9 +40,8 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.platform.PlatformView;
 
 /**
- * @Description:
- * @Author: weilu
- * @Time: 2019/6/26 0026 10:18.
+ * @author weilu
+ * 2019/6/26 0026 10:18.
  */
 public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler, LocationSource, AMapLocationListener,
         AMap.OnMapClickListener, PoiSearch.OnPoiSearchListener {
@@ -171,14 +170,11 @@ public class AMap2DView implements PlatformView, MethodChannel.MethodCallHandler
                 mListener.onLocationChanged(aMapLocation);
                 aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
                 search(aMapLocation.getLatitude(), aMapLocation.getLongitude());
-                if (mLocationClient != null) {
-                    mLocationClient.stopLocation();
-                }
             } else {
                 Toast.makeText(context,"定位失败，请检查GPS是否开启！", Toast.LENGTH_SHORT).show();
-                if (mLocationClient != null) {
-                    mLocationClient.stopLocation();
-                }
+            }
+            if (mLocationClient != null) {
+                mLocationClient.stopLocation();
             }
         }
     }

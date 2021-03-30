@@ -10,9 +10,8 @@ import io.flutter.plugin.platform.PlatformView;
 import io.flutter.plugin.platform.PlatformViewFactory;
 
 /**
- * @Description:
- * @Author: weilu
- * @Time: 2019/6/26 0026 10:16.
+ * @author weilu
+ * 2019/6/26 0026 10:16.
  */
 public class AMap2DFactory extends PlatformViewFactory {
 

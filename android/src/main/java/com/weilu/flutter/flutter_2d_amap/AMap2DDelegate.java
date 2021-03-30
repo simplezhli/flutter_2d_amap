@@ -9,9 +9,8 @@ import androidx.core.app.ActivityCompat;
 import io.flutter.plugin.common.PluginRegistry;
 
 /**
- * @Description:
- * @Author: weilu
- * @Time: 2019/6/28 0028 09:03.
+ * @author weilu
+ * 2019/6/28 0028 09:03.
  */
 public class AMap2DDelegate implements PluginRegistry.RequestPermissionsResultListener {
 
