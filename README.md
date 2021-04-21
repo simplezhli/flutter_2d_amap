@@ -1,8 +1,8 @@
 # flutter_2d_amap
 
-本插件主要服务于 [flutter_deer](https://github.com/simplezhli/flutter_deer)。仅保持现有功能，需要的功能可自行拓展。
+高德2D地图插件
 
-高德2D地图插件（已支持[1.12版本新的android插件api]("https://flutter.dev/docs/development/packages-and-plugins/plugin-api-migration")）
+本插件主要服务于 [flutter_deer](https://github.com/simplezhli/flutter_deer)。仅保持现有功能，没有的功能可自行拓展。
 
 ## 效果展示
 
@@ -23,14 +23,18 @@
 
 ## 使用方式
 
-```dart
+pubspec.yaml 添加：
 
+```
 flutter_2d_amap:
     git:
       url: https://github.com/simplezhli/flutter_2d_amap.git
+```
 
+使用：
+
+```dart
 import 'package:flutter_2d_amap/flutter_2d_amap.dart';
-
 
 AMap2DView(
   onPoiSearched: (result) {

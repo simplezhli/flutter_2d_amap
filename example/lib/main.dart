@@ -11,7 +11,7 @@ void main() {
 
 class MyApp extends StatefulWidget {
 
-  const MyApp({Key key}): super(key: key);
+  const MyApp({Key? key}): super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   List<PoiSearch> _list = [];
   int _index = 0;
   final ScrollController _controller = ScrollController();
-  AMap2DController _aMap2DController;
+  late AMap2DController _aMap2DController;
   
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
                         setState(() {
                           _index = index;
                           if (_aMap2DController != null) {
-                            _aMap2DController.move(_list[index].latitude, _list[index].longitude);
+                            _aMap2DController.move(_list[index].latitude ?? '', _list[index].longitude ?? '');
                           }
                         });
                       },
@@ -80,10 +80,10 @@ class _MyAppState extends State<MyApp> {
                           children: <Widget>[
                             Expanded(
                               child: Text(
-                                _list[index].provinceName + ' ' +
-                                    _list[index].cityName + ' ' +
-                                    _list[index].adName + ' ' +
-                                    _list[index].title,
+                                _list[index].provinceName! + ' ' +
+                                    _list[index].cityName! + ' ' +
+                                    _list[index].adName! + ' ' +
+                                    _list[index].title!,
                               ),
                             ),
                             Opacity(
