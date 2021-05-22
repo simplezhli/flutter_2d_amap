@@ -7,7 +7,7 @@ import 'amap_2d_view_state.dart'
 if (dart.library.html) 'web/amap_2d_view_state.dart'
 if (dart.library.io) 'mobile/amap_2d_view_state.dart';
 
-import 'poisearch_model.dart';
+import 'poi_search_model.dart';
 
 
 typedef AMap2DViewCreatedCallback = void Function(AMap2DController controller);
