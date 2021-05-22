@@ -3,7 +3,7 @@ description: Demonstrates how to use the flutter_2d_amap plugin.
 publish_to: 'flutter_2d_amap'
 
 environment:
-  sdk: ">=2.4.0 <3.0.0"
+  sdk: ">=2.12.0-0 <3.0.0"
 
 dependencies:
   flutter:

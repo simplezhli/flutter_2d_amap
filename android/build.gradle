@@ -22,7 +22,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 16
@@ -34,7 +34,7 @@ android {
 
 dependencies {
     api 'com.amap.api:map2d:6.0.0'
-    api 'com.amap.api:search:7.7.0'
-    api 'com.amap.api:location:5.3.0'
+    api 'com.amap.api:search:7.9.0'
+    api 'com.amap.api:location:5.3.1'
     api 'androidx.core:core:1.0.2'
 }
