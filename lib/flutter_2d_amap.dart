@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 export 'src/amap_2d_view.dart';
 export 'src/interface/amap_2d_controller.dart';
@@ -15,13 +15,13 @@ class Flutter2dAMap {
   static String get webKey => _webKey;
 
   static Future<bool?> setApiKey({String iOSKey = '', String webKey = ''}) async {
-    if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return _channel.invokeMethod<bool>('setKey', iOSKey);
+    if (kIsWeb) {
+      _webKey = webKey;
     } else {
-      if (kIsWeb) {
-        _webKey = webKey;
+      if (Platform.isIOS) {
+        return _channel.invokeMethod<bool>('setKey', iOSKey);
       }
-      return Future.value(true);
     }
+    return Future.value(true);
   }
 }
