@@ -53,7 +53,7 @@ linter:
     - always_put_control_body_on_new_line
     # - always_put_required_named_parameters_first # we prefer having parameters in the same order as fields https://github.com/flutter/flutter/issues/10219
     - always_require_non_null_named_parameters
-    # - always_specify_types
+    #    - always_specify_types
     # - always_use_package_imports # we do this commonly
     - annotate_overrides
     # - avoid_annotating_with_dynamic # conflicts with always_specify_types
@@ -61,13 +61,14 @@ linter:
     - avoid_bool_literals_in_conditional_expressions
     # - avoid_catches_without_on_clauses # we do this commonly
     # - avoid_catching_errors # we do this commonly
-    # - avoid_classes_with_only_static_members
+    #    - avoid_classes_with_only_static_members
     # - avoid_double_and_int_checks # only useful when targeting JS runtime
+    - avoid_dynamic_calls
     - avoid_empty_else
     - avoid_equals_and_hash_code_on_mutable_classes
     - avoid_escaping_inner_quotes
     - avoid_field_initializers_in_const_classes
-    # - avoid_function_literals_in_foreach_calls
+    #    - avoid_function_literals_in_foreach_calls
     # - avoid_implementing_value_types # not yet tested
     - avoid_init_to_null
     # - avoid_js_rounded_ints # only useful when targeting JS runtime
@@ -168,7 +169,7 @@ linter:
     - prefer_initializing_formals
     - prefer_inlined_adds
     # - prefer_int_literals # conflicts with https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo#use-double-literals-for-double-constants
-    # - prefer_interpolation_to_compose_strings # doesn't work with raw strings, see https://github.com/dart-lang/linter/issues/2490
+    - prefer_interpolation_to_compose_strings
     - prefer_is_empty
     - prefer_is_not_empty
     - prefer_is_not_operator

@@ -80,10 +80,7 @@ class _MyAppState extends State<MyApp> {
                           children: <Widget>[
                             Expanded(
                               child: Text(
-                                _list[index].provinceName! + ' ' +
-                                    _list[index].cityName! + ' ' +
-                                    _list[index].adName! + ' ' +
-                                    _list[index].title!,
+                                '${_list[index].provinceName!} ${_list[index].cityName!} ${_list[index].adName!} ${_list[index].title!}',
                               ),
                             ),
                             Opacity(
