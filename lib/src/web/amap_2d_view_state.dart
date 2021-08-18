@@ -63,7 +63,7 @@ class AMap2DViewState extends State<AMap2DView> {
     super.initState();
     _divId = DateTime.now().toIso8601String();
     /// 先创建div并注册
-    // ignore: undefined_prefixed_name
+    // ignore: undefined_prefixed_name,avoid_dynamic_calls
     ui.platformViewRegistry.registerViewFactory(_divId, (int viewId) {
       _element = DivElement()
         ..style.width = '100%'
