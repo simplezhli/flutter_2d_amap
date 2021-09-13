@@ -9,9 +9,9 @@ import 'package:flutter/widgets.dart';
 
 class HtmlElementViewEx extends HtmlElementView {
 
-  const HtmlElementViewEx({Key? key, required String viewType, required this.onPlatformViewCreated, this.creationParams}) : super(key: key, viewType: viewType);
+  const HtmlElementViewEx({Key? key, required String viewType, required this.onPlatformViewCreatedCallback, this.creationParams}) : super(key: key, viewType: viewType);
 
-  final PlatformViewCreatedCallback onPlatformViewCreated; //!!!
+  final PlatformViewCreatedCallback onPlatformViewCreatedCallback; //!!!
   final dynamic creationParams;
 
   @override
@@ -29,7 +29,7 @@ class HtmlElementViewEx extends HtmlElementView {
     final _HtmlElementViewControllerEx controller = _HtmlElementViewControllerEx(params.id, viewType);
     controller._initialize().then((_) {
       params.onPlatformViewCreated(params.id);
-      onPlatformViewCreated(params.id); //!!!
+      onPlatformViewCreatedCallback(params.id); //!!!
     });
     return controller;
   }
