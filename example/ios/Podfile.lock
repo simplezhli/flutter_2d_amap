@@ -1,11 +1,11 @@
 PODS:
   - AMap2DMap (5.6.1):
     - AMapFoundation (~> 1.4)
-  - AMapFoundation (1.6.5)
-  - AMapLocation (2.6.7):
-    - AMapFoundation (~> 1.6.4)
-  - AMapSearch (7.7.0):
-    - AMapFoundation (~> 1.6.4)
+  - AMapFoundation (1.6.8)
+  - AMapLocation (2.7.0):
+    - AMapFoundation (~> 1.6.8)
+  - AMapSearch (7.9.0):
+    - AMapFoundation (~> 1.6.6)
   - Flutter (1.0.0)
   - flutter_2d_amap (0.0.1):
     - AMap2DMap
@@ -32,12 +32,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AMap2DMap: cac76bc057de18a1641f34df6b50bf5bc6b23571
-  AMapFoundation: ba5c5e5c921a67df51c2eb1cc23ff0ff7c5aedd4
-  AMapLocation: a46c30d9930d0f3a3bd21139d8f845d10ac3f01d
-  AMapSearch: 93bccff245dada46060758f828ca1058ec3363fc
-  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  flutter_2d_amap: c17f503c128646126c12f394cee379930a058796
+  AMapFoundation: 32e9a0264ee62f5aa2aaf82bdafdda7985ce09c7
+  AMapLocation: 720eb034995c6198d480f8f7bbd714bb08bb9ef7
+  AMapSearch: 94cff5f6ab7233c1639111e486861ac2acea6d4b
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  flutter_2d_amap: 3bab4180bd63771b9c068c7959437f660baf78b7
 
-PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
+PODFILE CHECKSUM: b1f7a399522c118a74b177b13c01eca692aa7e6d
 
 COCOAPODS: 1.10.1

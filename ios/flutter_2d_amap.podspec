@@ -19,6 +19,7 @@ A new Flutter plugin.
   s.dependency 'AMapSearch'
   s.dependency 'AMapLocation'
   s.static_framework = true
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64 i386' }
 end
 
