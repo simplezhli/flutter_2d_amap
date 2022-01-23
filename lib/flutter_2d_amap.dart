@@ -24,4 +24,15 @@ class Flutter2dAMap {
     }
     return Future.value(true);
   }
+
+  /// 更新同意隐私状态,需要在初始化地图之前完成
+  static Future<void> updatePrivacy(bool isAgree) async {
+    if (kIsWeb) {
+
+    } else {
+      if (Platform.isIOS || Platform.isAndroid) {
+        await _channel.invokeMethod<bool>('updatePrivacy', isAgree.toString());
+      }
+    }
+  }
 }

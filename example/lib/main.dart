@@ -3,6 +3,7 @@ import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Flutter2dAMap.updatePrivacy(true);
   Flutter2dAMap.setApiKey(
     iOSKey: '1a8f6a489483534a9f2ca96e4eeeb9b3',
     webKey: '4e479545913a3a180b3cffc267dad646',

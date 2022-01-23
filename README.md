@@ -31,6 +31,12 @@ flutter_2d_amap:
       url: https://github.com/simplezhli/flutter_2d_amap.git
 ```
 
+使用前同意隐私政策：
+
+```dart
+Flutter2dAMap.updatePrivacy(true);
+```
+
 使用：
 
 ```dart
@@ -84,7 +90,6 @@ AndroidManifest.xml 中添加：
 使用前设置key：
 
 ```dart
-
 Flutter2dAMap.setApiKey(iOSKey: '配置你的key');
 
 ```

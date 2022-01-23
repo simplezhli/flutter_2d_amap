@@ -1,10 +1,16 @@
 package com.weilu.flutter.flutter_2d_amap;
 
 import androidx.annotation.NonNull;
+
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.services.core.ServiceSettings;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.BinaryMessenger;
+import io.flutter.plugin.common.MethodCall;
+import io.flutter.plugin.common.MethodChannel;
 
 /**
  * Flutter2dAmapPlugin
@@ -15,6 +21,7 @@ public class Flutter2dAmapPlugin implements FlutterPlugin, ActivityAware{
   private AMap2DDelegate delegate;
   private FlutterPluginBinding pluginBinding;
   private ActivityPluginBinding activityBinding;
+  private MethodChannel methodChannel;
   
   public Flutter2dAmapPlugin() {}
   
@@ -40,16 +47,36 @@ public class Flutter2dAmapPlugin implements FlutterPlugin, ActivityAware{
   }
 
   @Override
-  public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+  public void onAttachedToActivity(@NonNull final ActivityPluginBinding binding) {
     activityBinding = binding;
     
     BinaryMessenger messenger = pluginBinding.getBinaryMessenger();
     AMap2DFactory mFactory = new AMap2DFactory(messenger, null);
     pluginBinding.getPlatformViewRegistry().registerViewFactory("plugins.weilu/flutter_2d_amap", mFactory);
-    
+
     delegate = new AMap2DDelegate(binding.getActivity());
     binding.addRequestPermissionsResultListener(delegate);
     mFactory.setDelegate(delegate);
+
+    methodChannel = new MethodChannel(messenger, "plugins.weilu/flutter_2d_amap_");
+    methodChannel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
+      @Override
+      public void onMethodCall(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result) {
+        String method = methodCall.method;
+        switch(method) {
+          case "updatePrivacy":
+            boolean isAgree = "true".equals(methodCall.arguments);
+            ServiceSettings.updatePrivacyShow(binding.getActivity(), isAgree, isAgree);
+            ServiceSettings.updatePrivacyAgree(binding.getActivity(), isAgree);
+            AMapLocationClient.updatePrivacyShow(binding.getActivity(), isAgree, isAgree);
+            AMapLocationClient.updatePrivacyAgree(binding.getActivity(), isAgree);
+            break;
+          default:
+            break;
+        }
+      }
+    });
+
   }
 
   @Override
@@ -71,5 +98,6 @@ public class Flutter2dAmapPlugin implements FlutterPlugin, ActivityAware{
     activityBinding.removeRequestPermissionsResultListener(delegate);
     activityBinding = null;
     delegate = null;
+    methodChannel.setMethodCallHandler(null);
   }
 }
