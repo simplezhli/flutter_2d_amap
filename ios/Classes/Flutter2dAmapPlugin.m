@@ -1,6 +1,8 @@
 #import "Flutter2dAmapPlugin.h"
 #import "AMapFoundationKit/AMapFoundationKit.h"
 #import "FlutterAMap2D.h"
+#import "AMapSearchAPI.h"
+#import "AMapLocationManager.h"
 
 @implementation Flutter2dAmapPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -21,6 +23,19 @@
     [AMapServices sharedServices].enableHTTPS = YES;
     // 配置高德地图的key
     [AMapServices sharedServices].apiKey = key;
+    result(@YES);
+  } else if ([@"updatePrivacy" isEqualToString:call.method]) {
+    if ([@"true" isEqualToString:call.arguments]) {
+      [AMapSearchAPI updatePrivacyShow:AMapPrivacyShowStatusDidShow privacyInfo:AMapPrivacyInfoStatusDidContain];
+      [AMapSearchAPI updatePrivacyAgree:AMapPrivacyAgreeStatusDidAgree];
+      [AMapLocationManager updatePrivacyShow:AMapPrivacyShowStatusDidShow privacyInfo:AMapPrivacyInfoStatusDidContain];
+      [AMapLocationManager updatePrivacyAgree:AMapPrivacyAgreeStatusDidAgree];
+    } else {
+      [AMapSearchAPI updatePrivacyShow:AMapPrivacyShowStatusNotShow privacyInfo:AMapPrivacyInfoStatusNotContain];
+      [AMapSearchAPI updatePrivacyAgree:AMapPrivacyAgreeStatusNotAgree];
+      [AMapLocationManager updatePrivacyShow:AMapPrivacyShowStatusNotShow privacyInfo:AMapPrivacyInfoStatusNotContain];
+      [AMapLocationManager updatePrivacyAgree:AMapPrivacyAgreeStatusNotAgree];
+    }
     result(@YES);
   } else {
     result(FlutterMethodNotImplemented);
