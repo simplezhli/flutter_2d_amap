@@ -72,7 +72,7 @@ class AMap2DViewState extends State<AMap2DView> {
 
       return _element;
     });
-    SchedulerBinding.instance?.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       /// 创建地图
       _onPlatformViewCreated();
     });

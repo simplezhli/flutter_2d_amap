@@ -1,6 +1,5 @@
 
 import 'package:flutter_2d_amap/flutter_2d_amap.dart';
-import 'package:flutter_2d_amap/src/interface/amap_2d_controller.dart';
 import 'package:flutter_2d_amap/src/web/amapjs.dart';
 import 'package:js/js.dart';
 
@@ -105,23 +104,21 @@ class AMap2DWebController extends AMap2DController {
   Function(String status, SearchResult result) get searchResult => allowInterop((status, result) {
     final List<PoiSearch> list = <PoiSearch>[];
     if (status == 'complete') {
-      if (result is SearchResult) {
-        result.poiList?.pois?.forEach((dynamic poi) {
-          if (poi is Poi) {
-            final PoiSearch poiSearch = PoiSearch(
-              cityCode: poi.citycode,
-              cityName: poi.cityname,
-              provinceName: poi.pname,
-              title: poi.name,
-              adName: poi.adname,
-              provinceCode: poi.pcode,
-              latitude: poi.location.getLat().toString(),
-              longitude: poi.location.getLng().toString(),
-            );
-            list.add(poiSearch);
-          }
-        });
-      }
+      result.poiList?.pois?.forEach((dynamic poi) {
+        if (poi is Poi) {
+          final PoiSearch poiSearch = PoiSearch(
+            cityCode: poi.citycode,
+            cityName: poi.cityname,
+            provinceName: poi.pname,
+            title: poi.name,
+            adName: poi.adname,
+            provinceCode: poi.pcode,
+            latitude: poi.location.getLat().toString(),
+            longitude: poi.location.getLng().toString(),
+          );
+          list.add(poiSearch);
+        }
+      });
     } else if (status == 'no_data'){
       print('无返回结果');
     } else {

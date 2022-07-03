@@ -8,7 +8,6 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:networkSecurityConfig="@xml/network_security_config"
-        android:name="io.flutter.app.FlutterApplication"
         android:label="flutter_2d_amap_example"
         android:icon="@mipmap/ic_launcher">
 
@@ -21,6 +20,7 @@
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
             android:name=".MainActivity"
+            android:exported="true"
             android:theme="@style/LaunchTheme"
             android:windowSoftInputMode="adjustResize">
             <!-- Specify that the launch screen should continue being displayed -->
