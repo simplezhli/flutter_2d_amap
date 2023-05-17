@@ -21,11 +21,11 @@ class AMap2DMobileController extends AMap2DController {
       case 'poiSearchResult':
         {
           if (_widget.onPoiSearched != null) {
-            final Map args = call.arguments as Map<dynamic, dynamic>;
+            final Map<dynamic, dynamic> args = call.arguments as Map<dynamic, dynamic>;
             final List<PoiSearch> list = [];
-            (json.decode(args['poiSearchResult'] as String) as List).forEach((dynamic value) {
+            for (final value in json.decode(args['poiSearchResult'] as String) as List) {
               list.add(PoiSearch.fromJsonMap(value as Map<String, dynamic>));
-            });
+            }
             _widget.onPoiSearched!(list);
           }
           return Future<dynamic>.value('');

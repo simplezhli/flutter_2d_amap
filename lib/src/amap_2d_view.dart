@@ -14,11 +14,11 @@ typedef AMap2DViewCreatedCallback = void Function(AMap2DController controller);
 class AMap2DView extends StatefulWidget {
   
   const AMap2DView({
-    Key? key,
+    super.key,
     this.isPoiSearch = true,
     this.onPoiSearched,
     this.onAMap2DViewCreated,
-  }) : super(key: key);
+  });
   
   final bool isPoiSearch;
   final AMap2DViewCreatedCallback? onAMap2DViewCreated;
@@ -27,4 +27,3 @@ class AMap2DView extends StatefulWidget {
   @override
   AMap2DViewState createState() => AMap2DViewState();
 }
-

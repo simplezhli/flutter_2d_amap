@@ -1,4 +1,5 @@
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 import 'package:flutter_2d_amap/src/web/amapjs.dart';
 import 'package:js/js.dart';
@@ -86,7 +87,9 @@ class AMap2DWebController extends AMap2DController {
         /// 异常查询：https://lbs.amap.com/faq/js-api/map-js-api/position-related/43361
         /// Get geolocation time out：浏览器定位超时，包括原生的超时，可以适当增加超时属性的设定值以减少这一现象，
         /// 另外还有个别浏览器（如google Chrome浏览器等）本身的定位接口是黑洞，通过其请求定位完全没有回应，也会超时返回失败。
-        print(result.message);
+        if (kDebugMode) {
+          print(result.message);
+        }
       }
     }));
     return Future.value();
@@ -120,9 +123,13 @@ class AMap2DWebController extends AMap2DController {
         }
       });
     } else if (status == 'no_data'){
-      print('无返回结果');
+      if (kDebugMode) {
+        print('无返回结果');
+      }
     } else {
-      print(result);
+      if (kDebugMode) {
+        print(result);
+      }
     }
     /// 默认点移动到搜索结果的第一条
     if (list.isNotEmpty) {

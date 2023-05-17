@@ -1,3 +1,5 @@
+// ignore_for_file: always_declare_return_types
+
 @JS('AMap')
 library amap;
 

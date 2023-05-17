@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 
 class HtmlElementViewEx extends HtmlElementView {
 
-  const HtmlElementViewEx({Key? key, required String viewType, required this.onPlatformViewCreatedCallback, this.creationParams}) : super(key: key, viewType: viewType);
+  const HtmlElementViewEx({super.key, required super.viewType, required this.onPlatformViewCreatedCallback, this.creationParams});
 
   final PlatformViewCreatedCallback onPlatformViewCreatedCallback; //!!!
   final dynamic creationParams;
@@ -61,8 +61,9 @@ class _HtmlElementViewControllerEx extends PlatformViewController {
 
   @override
   Future<void> dispose() {
-    if (_initialized)
+    if (_initialized) {
       SystemChannels.platform_views.invokeMethod<void>('dispose', viewId);
+    }
     return Future.value();
   }
 }

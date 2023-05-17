@@ -1,3 +1,6 @@
+// ignore_for_file: depend_on_referenced_packages
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 
@@ -12,7 +15,7 @@ void main() {
 
 class MyApp extends StatefulWidget {
 
-  const MyApp({Key? key}): super(key: key);
+  const MyApp({super.key});
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -23,7 +26,7 @@ class _MyAppState extends State<MyApp> {
   List<PoiSearch> _list = [];
   int _index = 0;
   final ScrollController _controller = ScrollController();
-  late AMap2DController _aMap2DController;
+  late AMap2DController? _aMap2DController;
   
   @override
   Widget build(BuildContext context) {
@@ -40,7 +43,9 @@ class _MyAppState extends State<MyApp> {
                 child: AMap2DView(
                   onPoiSearched: (result) {
                     if (result.isEmpty) {
-                      print('无搜索结果返回');
+                      if (kDebugMode) {
+                        print('无搜索结果返回');
+                      }
                       return;
                     }
                     _controller.animateTo(0.0, duration: const Duration(milliseconds: 10), curve: Curves.ease);
@@ -69,7 +74,7 @@ class _MyAppState extends State<MyApp> {
                         setState(() {
                           _index = index;
                           if (_aMap2DController != null) {
-                            _aMap2DController.move(_list[index].latitude ?? '', _list[index].longitude ?? '');
+                            _aMap2DController?.move(_list[index].latitude ?? '', _list[index].longitude ?? '');
                           }
                         });
                       },
