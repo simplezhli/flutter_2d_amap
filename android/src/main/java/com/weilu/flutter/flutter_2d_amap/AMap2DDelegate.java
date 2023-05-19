@@ -15,15 +15,13 @@ import io.flutter.plugin.common.PluginRegistry;
 public class AMap2DDelegate implements PluginRegistry.RequestPermissionsResultListener {
 
     private static final int REQUEST_PERMISSION = 6666;
-    
+
     private final String[] permission = {
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.READ_PHONE_STATE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_PHONE_STATE,
     };
-    
+
     interface PermissionManager {
         /**
          * 是否授予权限
@@ -49,11 +47,11 @@ public class AMap2DDelegate implements PluginRegistry.RequestPermissionsResultLi
     }
 
     private RequestPermission mRequestPermission;
-    
+
     private final PermissionManager permissionManager;
-    
+
     AMap2DDelegate(final Activity activity) {
-        
+
         permissionManager = new PermissionManager() {
             @Override
             public boolean isPermissionGranted() {

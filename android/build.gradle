@@ -1,5 +1,5 @@
 group 'com.weilu.flutter.flutter_2d_amap'
-version '1.0-SNAPSHOT'
+version '1.1.0'
 
 buildscript {
     repositories {
@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:7.2.2'
     }
 }
 
@@ -22,7 +22,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 16
@@ -34,7 +34,7 @@ android {
 
 dependencies {
     api 'com.amap.api:map2d:6.0.0'
-    api 'com.amap.api:search:8.1.0'
-    api 'com.amap.api:location:5.6.2'
+    api 'com.amap.api:search:9.5.0'
+    api 'com.amap.api:location:6.3.0'
     api 'androidx.core:core:1.0.2'
 }
