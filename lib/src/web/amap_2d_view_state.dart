@@ -1,8 +1,6 @@
 
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html';
-import 'dart:js_util';
-import 'dart:ui' as ui;
+import 'dart:ui_web' as ui_web;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
@@ -11,6 +9,8 @@ import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 import 'package:flutter_2d_amap/src/web/amap_2d_controller.dart';
 import 'package:flutter_2d_amap/src/web/amapjs.dart';
 import 'package:flutter_2d_amap/src/web/loaderjs.dart';
+import 'package:js/js_util.dart';
+import 'package:web/web.dart';
 
 class AMap2DViewState extends State<AMap2DView> {
 
@@ -19,7 +19,7 @@ class AMap2DViewState extends State<AMap2DView> {
   
   late AMap _aMap;
   late String _divId;
-  late DivElement _element;
+  late HTMLDivElement _element;
 
   void _onPlatformViewCreated() {
 
@@ -66,8 +66,8 @@ class AMap2DViewState extends State<AMap2DView> {
     _divId = DateTime.now().toIso8601String();
     /// 先创建div并注册
     // ignore: undefined_prefixed_name,avoid_dynamic_calls
-    ui.platformViewRegistry.registerViewFactory(_divId, (int viewId) {
-      _element = DivElement()
+    ui_web.platformViewRegistry.registerViewFactory(_divId, (int viewId) {
+      _element = HTMLDivElement()
         ..style.width = '100%'
         ..style.height = '100%'
         ..style.margin = '0';

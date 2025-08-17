@@ -9,10 +9,9 @@ import 'package:flutter/widgets.dart';
 
 class HtmlElementViewEx extends HtmlElementView {
 
-  const HtmlElementViewEx({super.key, required super.viewType, required this.onPlatformViewCreatedCallback, this.creationParams});
+  const HtmlElementViewEx({super.key, required super.viewType, required this.onPlatformViewCreatedCallback});
 
-  final PlatformViewCreatedCallback onPlatformViewCreatedCallback; //!!!
-  final dynamic creationParams;
+  final PlatformViewCreatedCallback onPlatformViewCreatedCallback;
 
   @override
   Widget build(BuildContext context) => PlatformViewLink(
